@@ -1,4 +1,4 @@
-FROM php:7.4.1-fpm
+FROM php:8.0-fpm
 
 # COPY php.ini
 COPY ./docker/php/php.ini /user/local/etc/php/php.ini
@@ -17,5 +17,7 @@ RUN apt-get update && \
     unzip \
     vim \
     && docker-php-ext-install pdo_mysql bcmath
+
+RUN apt-get -y install nodejs npm && npm install n -g && n 12.14
 
 WORKDIR /var/www/html
