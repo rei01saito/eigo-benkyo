@@ -6,7 +6,7 @@
 
 @section('main')
     <div class="flex justify-center pt-12">
-        <div id="spin" class="h-96 w-96 border border-8 rounded-full flex justify-center items-center bg-white relative">
+        <div id="spin" class="h-96 w-96 border border-8 rounded-full flex justify-center items-center bg-white relative animate-spin">
             <div class="absolute -top-6 border rounded-full bg-gray-400 w-12 h-12"></div>
         </div>
         <p class="text-6xl absolute top-80">60:00</p>
