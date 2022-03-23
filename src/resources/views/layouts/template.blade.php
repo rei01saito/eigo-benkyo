@@ -27,11 +27,15 @@
         </nav>
     </header>
 
-    <div class="pt-16">
+    <div class="pt-16 bg-slate-100">
         @yield('breadcrumbs')
     </div>
     
-    @yield('main')
+    <main class="h-full bg-slate-100">
+        <div class="container mx-auto">
+            @yield('main')
+        </div>
+    </main>
 
 </body>
 </html>

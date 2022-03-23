@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::get('/', function () {
 Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
 
 Route::get('/status', [StatusController::class, 'index'])->name('status');
-Route::get('/tasks', [StatusController::class, 'tasks'])->name('tasks');
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

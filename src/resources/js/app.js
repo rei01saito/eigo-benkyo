@@ -1,4 +1,5 @@
 require('./bootstrap');
+import './home.js';
 
 import Alpine from 'alpinejs';
 

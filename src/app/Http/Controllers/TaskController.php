@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class StatusController extends Controller
+class TaskController extends Controller
 {
     public function index()
     {
-        return view('status/status');
+        return view('tasks/tasks');
     }
 }
