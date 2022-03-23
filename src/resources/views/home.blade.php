@@ -12,6 +12,6 @@
         <p class="text-6xl absolute top-80">60:00</p>
     </div>
     <div class="flex justify-center pt-24">
-        <button class="text-white rounded px-3 py-2 bg-blue-600 active:bg-blue-900">start</button>
+        <button id="time-button" class="text-white rounded px-3 py-2 bg-blue-600 active:bg-blue-900">start</button>
     </div>
 @endsection

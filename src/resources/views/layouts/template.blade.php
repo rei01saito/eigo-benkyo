@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 </head>
 <body class="h-screen">
     <header class="border px-3 py-2 bg-blue-200 shadow fixed w-full">

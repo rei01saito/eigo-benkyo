@@ -5016,10 +5016,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.onload = onClick;
 
 function onClick() {
-  var button = document.querySelector('button');
+  var button = document.querySelector('#time-button');
+
+  if (button === null) {
+    return false;
+  }
+
   button.addEventListener('click', function () {
     var spin = document.querySelector('#spin');
-    console.log(spin);
     spin.classList.toggle('animate-spin');
   }, false);
 }
