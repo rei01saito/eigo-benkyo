@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\StatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +16,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
+
+Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
+
+Route::get('/status', [StatusController::class, 'index'])->name('status');
+Route::get('/tasks', [StatusController::class, 'tasks'])->name('tasks');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
