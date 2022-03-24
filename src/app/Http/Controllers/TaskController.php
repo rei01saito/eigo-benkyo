@@ -28,4 +28,14 @@ class TaskController extends Controller
         $tasks->fill($request->all())->save();
         return redirect()->route('tasks');
     }
+
+    public function softDelete($id)
+    {
+        Task::where('tasks_id', $id)->delete();
+        return response()->json(
+            [
+                'message' => '削除しました。'
+            ]
+        );
+    }
 }

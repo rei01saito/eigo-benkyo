@@ -6,9 +6,12 @@
 
 @section('main')
     <div class="h-screen">
+        <!-- Trash can -->
         <div class="text-center pt-3 w-full">
             <i class="fa-solid fa-trash-can text-8xl"></i>
         </div>
+
+        <!-- tasks -->
         <div class="flex">
             <div class="py-12 px-1 w-full">
                 <div class="border rounded-lg bg-white shadow-md">
@@ -58,6 +61,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- loading -->
+        <div class="load-icon text-center hidden">
+            <i class="fas fa-spinner fa-pulse"></i>
         </div>
     </div>
 @endsection

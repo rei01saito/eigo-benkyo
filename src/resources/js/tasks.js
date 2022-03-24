@@ -10,7 +10,32 @@ function onTask(){
 
         task.addEventListener('dblclick', event => {
             const taskId = event.currentTarget.getAttribute('data-taskId');
-            confirm('削除しますか？')
+            if (confirm('削除しますか？')) {
+
+                const loadIcon = document.querySelector('.load-icon')
+                loadIcon.classList.remove('hidden');
+                task.before(loadIcon);
+                task.classList.add('hidden');
+
+                const url = '/tasks/softDelete/' + taskId;
+                fetch(url, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('success!');
+                    loadIcon.classList.add('hidden');
+                    task.remove();
+                })
+                .catch(err => {
+                    console.log('fail');
+                    loadIcon.classList.add('hidden');
+                    task.classList.remove('hidden');
+                })
+
+            }
         })
     }
 }

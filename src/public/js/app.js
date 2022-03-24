@@ -5054,7 +5054,7 @@ function onTask() {
       _step;
 
   try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+    var _loop = function _loop() {
       var task = _step.value;
       task.addEventListener('click', function (event) {
         var taskContents = event.currentTarget.querySelector('.task-contents');
@@ -5062,8 +5062,34 @@ function onTask() {
       });
       task.addEventListener('dblclick', function (event) {
         var taskId = event.currentTarget.getAttribute('data-taskId');
-        confirm('削除しますか？');
+
+        if (confirm('削除しますか？')) {
+          var loadIcon = document.querySelector('.load-icon');
+          loadIcon.classList.remove('hidden');
+          task.before(loadIcon);
+          task.classList.add('hidden');
+          var url = '/tasks/softDelete/' + taskId;
+          fetch(url, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then(function (response) {
+            return response.json();
+          }).then(function (data) {
+            console.log('success!');
+            loadIcon.classList.add('hidden');
+            task.remove();
+          })["catch"](function (err) {
+            console.log('fail');
+            loadIcon.classList.add('hidden');
+            task.classList.remove('hidden');
+          });
+        }
       });
+    };
+
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _loop();
     }
   } catch (err) {
     _iterator.e(err);

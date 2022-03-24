@@ -25,6 +25,7 @@ Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
 Route::get('/status', [StatusController::class, 'index'])->name('status');
 
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
+Route::get('/tasks/softDelete/{id}', [TaskController::class, 'softDelete'])->name('tasks-softDelete');
 Route::post('/tasks/store', [TaskController::class, 'store'])->name('tasks-store');
 
 Route::get('/dashboard', function () {
