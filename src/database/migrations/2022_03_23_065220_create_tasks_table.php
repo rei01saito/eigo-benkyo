@@ -19,7 +19,7 @@ class CreateTasksTable extends Migration
             $table->unsignedInteger('priority');
             $table->string('title', 30);
             $table->string('contents');
-            $table->date('deadline');
+            $table->date('deadline')->nullable();
             $table->timestamps();
         });
     }

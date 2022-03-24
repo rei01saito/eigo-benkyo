@@ -6,14 +6,19 @@ use Illuminate\View\Component;
 
 class TaskModal extends Component
 {
+    public $tasks;
+    public $thinking;
+    public $doing;
+    public $done;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($tasks)
     {
-        //
+        $this->$tasks = $tasks;
+        $this->thinking = $tasks->where('priority', 0);
     }
 
     /**

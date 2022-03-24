@@ -23,7 +23,9 @@ Route::get('/', function () {
 Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
 
 Route::get('/status', [StatusController::class, 'index'])->name('status');
+
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
+Route::post('/tasks/store', [TaskController::class, 'store'])->name('tasks-store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

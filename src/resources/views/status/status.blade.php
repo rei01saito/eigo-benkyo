@@ -5,6 +5,8 @@
 @endsection
 
 @section('main')
+    <p>ガントチャートにする</p>
+    <p>ライブラリ候補: Frappe gantt</p>
     <div class="target h-screen pt-24 bg-gray-100 p-6">
         <div class="m-6 border border-3 bg-white h-5/6 rounded-2xl">
             <p class="pt-6 pl-6">目標</p>

@@ -5,13 +5,23 @@
 @endsection
 
 @section('main')
-    <div class="flex justify-center pt-12">
-        <div id="spin" class="h-96 w-96 border border-8 rounded-full flex justify-center items-center bg-white relative animate-spin">
-            <div class="absolute -top-6 border rounded-full bg-gray-400 w-12 h-12"></div>
+<div class="flex">
+    <div class="grow">
+        <div class="flex justify-center pt-12">
+            <div id="spin" class="h-96 w-96 border border-8 rounded-full flex justify-center items-center bg-white relative animate-spin">
+                <div class="absolute -top-6 border rounded-full bg-gray-400 w-12 h-12"></div>
+            </div>
+            <p class="text-6xl absolute top-80">60:00</p>
         </div>
-        <p class="text-6xl absolute top-80">60:00</p>
+        <div class="flex justify-center pt-24">
+            <button id="time-button" class="text-white rounded px-3 py-2 bg-blue-600 active:bg-blue-900">start</button>
+        </div>
     </div>
-    <div class="flex justify-center pt-24">
-        <button id="time-button" class="text-white rounded px-3 py-2 bg-blue-600 active:bg-blue-900">start</button>
+    <div class="border bg-white rounded-lg p-6 m-3 h-72 w-64">
+        <p>Taskの指定</p>
     </div>
+</div>
+
+
+
 @endsection
