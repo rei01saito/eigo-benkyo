@@ -7,13 +7,12 @@
 @section('main')
     <div class="h-screen">
         <!-- Trash can -->
-        <div class="text-center pt-3 w-full">
-            <i class="fa-solid fa-trash-can text-8xl"></i>
-        </div>
-
+        <x-task-trashcan />
+        
         <!-- tasks -->
+        <div class="text-center pt-12 pb-1">ダブルクリックで削除!</div>
         <div class="flex">
-            <div class="py-12 px-1 w-full">
+            <div class="px-1 w-full">
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
                         <p class="text-2xl text-center">検討中のTask</p>
@@ -29,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="py-12 px-1 w-full">
+            <div class="px-1 w-full">
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
                         <p class="text-2xl text-center">実行中のTask</p>
@@ -45,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="py-12 px-1 w-full">
+            <div class="px-1 w-full">
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
                         <p class="text-2xl text-center">完了したTask</p>

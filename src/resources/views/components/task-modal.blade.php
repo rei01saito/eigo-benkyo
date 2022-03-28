@@ -19,6 +19,8 @@
                     <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="タイトル名">
                     <textarea name="contents" id="title" class="h-28 mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="タスク内容"></textarea>
                     
+                    <label for="timer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 pt-4">タイマー時間（分）</label>
+                    <input type="text" name="timer" id="timer" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="分で入力">
                     <!-- テスト用 -->
                     <input type="hidden" name="priority" value="1">
                 </div>

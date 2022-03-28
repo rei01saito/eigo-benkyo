@@ -14,6 +14,7 @@ class Task extends Model
     protected $fillable = [
         'priority',
         'title',
-        'contents'
+        'contents',
+        'timer'
     ];
 }

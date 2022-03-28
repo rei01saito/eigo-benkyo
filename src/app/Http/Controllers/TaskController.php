@@ -38,4 +38,30 @@ class TaskController extends Controller
             ]
         );
     }
+
+    public function trashcan()
+    {
+        $trashed = Task::onlyTrashed()->get();
+        $list = [];
+        foreach ($trashed as $t) {
+            $list[] = $t;
+        }
+        return response()->json(
+            $list
+        );
+    }
+
+    public function restore()
+    {
+        $tasks = Task::onlyTrashed();
+        $tasks->restore();
+        return redirect()->route('tasks')->with('msg', 'ゴミ箱の中身を元に戻しました。');
+    }
+
+    public function forceDelete()
+    {
+        $tasks = Task::onlyTrashed();
+        $tasks->forceDelete();
+        return redirect()->route('tasks')->with('msg', 'ゴミ箱の中身を削除しました。');
+    }
 }
