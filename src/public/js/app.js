@@ -4964,12 +4964,18 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _home_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./home.js */ "./resources/js/home.js");
+/* harmony import */ var _home_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_home_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tasks_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tasks.js */ "./resources/js/tasks.js");
+/* harmony import */ var _tasks_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tasks_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
+
+
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start();
 
 /***/ }),
 
@@ -5001,6 +5007,229 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/home.js":
+/*!******************************!*\
+  !*** ./resources/js/home.js ***!
+  \******************************/
+/***/ (() => {
+
+window.onload = onClick;
+
+function onClick() {
+  var button = document.querySelector('#time-button');
+  var timer = document.querySelector('#setTimer');
+  console.log('gda');
+
+  if (button === null) {
+    return false;
+  }
+
+  button.addEventListener('click', function () {
+    var spin = document.querySelector('#spin');
+    spin.classList.toggle('animate-spin');
+  }, false);
+  timer.addEventListener('click', function (event) {
+    var task_id = event.currentTarget.getAttribute('data-task-id');
+    var url = "/home/" + task_id;
+    var timer = document.querySelector('.timer');
+    fetch(url, {}).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      timer.textContent = data["timer"];
+    })["catch"](function (err) {
+      alert('通信に失敗しました。');
+    });
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/tasks.js":
+/*!*******************************!*\
+  !*** ./resources/js/tasks.js ***!
+  \*******************************/
+/***/ (() => {
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+window.onload = Task;
+
+function Task() {
+  var tasks = document.querySelectorAll('.task');
+  var trashcan = document.querySelector('.fa-trash-can');
+  var takeBack = document.querySelector('#take-back');
+  var exhaust = document.querySelector('#exhaust');
+
+  if (tasks.length || trashcan || takeBack || exhaust) {
+    var _iterator = _createForOfIteratorHelper(tasks),
+        _step;
+
+    try {
+      var _loop = function _loop() {
+        var task = _step.value;
+        task.addEventListener('click', function (event) {
+          var taskContents = event.currentTarget.querySelector('.task-contents');
+          taskContents.classList.toggle('hidden');
+        });
+        task.addEventListener('dblclick', function (event) {
+          var taskId = event.currentTarget.getAttribute('data-taskId');
+
+          if (confirm('削除しますか？')) {
+            var loadIcon = document.querySelector('.load-icon');
+            loadIcon.classList.remove('hidden');
+            task.before(loadIcon);
+            task.classList.add('hidden');
+            var url = '/tasks/softDelete/' + taskId;
+            fetch(url, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              console.log('success!');
+              loadIcon.classList.add('hidden');
+              task.remove();
+            })["catch"](function (err) {
+              console.log('fail');
+              loadIcon.classList.add('hidden');
+              task.classList.remove('hidden');
+            });
+          }
+        });
+      };
+
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        _loop();
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    trashcan.addEventListener('click', function () {
+      var loadIcon = document.querySelector('.load-icon');
+      loadIcon.classList.remove('hidden');
+      document.querySelector('.trashed-index').appendChild(loadIcon);
+      fetch('/tasks/trashcan', {}).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        var ti = document.querySelector('.trashed-index');
+        ti.innerHTML = '';
+
+        if (data.length) {
+          data.forEach(function (t) {
+            var el = document.createElement('p');
+            el.setAttribute('class', 'px-3 py-1 hover:underline cursor-pointer');
+            el.textContent = t['title'] + ':' + t['contents'];
+            ti.appendChild(el);
+          });
+        } else {
+          ti.innerHTML = 'ゴミ箱は空です。';
+        }
+      });
+    });
+    takeBack.addEventListener('click', function () {
+      location.href = "/tasks/restore";
+    });
+    exhaust.addEventListener('click', function () {
+      location.href = "/tasks/forceDelete";
+    });
+  } // 後で別ファイルで実行できるように修正する
+
+
+  var button = document.querySelector('#time-button');
+  var timer = document.querySelectorAll('#setTimer');
+  var timerDisplay = document.querySelector('#timer-display');
+
+  if (button !== null) {
+    button.addEventListener('click', function () {
+      var amount = timerDisplay.getAttribute('data-timer-amount');
+      var now = new Date();
+      var end = new Date(now.getTime() + amount * 1000);
+      var time = end.getTime(); // 残りtimestamp
+
+      var intervalId = setInterval(function () {
+        time -= 1000;
+        var remain = time - now.getTime();
+        timerDisplay.setAttribute('data-timer-amount', remain);
+        var hour = Math.floor(remain / (60 * 1000));
+        var min = Math.floor(remain % (60 * 1000) / 1000);
+        timerDisplay.textContent = hour + ':' + min;
+
+        if (remain < 1) {
+          clearInterval(intervalId);
+          document.querySelector('#finish-icon').classList.remove('hidden');
+
+          var _finishIntervalId = setTimeout(function () {
+            document.querySelector('#finish-icon').classList.add('hidden');
+          }, 3000); // のちにここに何回達成したかを更新する同期処理を追加
+
+
+          location.reload();
+        }
+
+        var _iterator2 = _createForOfIteratorHelper(timer),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var t = _step2.value;
+            t.addEventListener('click', function () {
+              clearInterval(intervalId);
+              clearInterval(finishIntervalId);
+            });
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      }, 1000);
+    }, false);
+  }
+
+  if (timer.length) {
+    var _iterator3 = _createForOfIteratorHelper(timer),
+        _step3;
+
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var t = _step3.value;
+        t.addEventListener('click', function (event) {
+          var task_id = event.currentTarget.getAttribute('data-tasks-id');
+          var url = "/home/" + task_id;
+          var timer = document.querySelector('.timer');
+          fetch(url, {}).then(function (response) {
+            return response.json();
+          }).then(function (data) {
+            if (data["timer"]) {
+              timerDisplay.textContent = data["timer"] + ':00';
+              timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
+            } else {
+              timerDisplay.textContent = '60:00';
+              timerDisplay.setAttribute('data-timer-amount', '1800');
+            }
+          })["catch"](function (err) {
+            alert('通信に失敗しました。');
+          });
+        });
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
+    }
+  }
+}
 
 /***/ }),
 
@@ -22216,10 +22445,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./resources/css/app.css":
-/*!*******************************!*\
-  !*** ./resources/css/app.css ***!
-  \*******************************/
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22499,6 +22728,18 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -22608,7 +22849,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
