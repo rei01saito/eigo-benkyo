@@ -20,11 +20,11 @@
                             <div class="active:pt-1 task" data-taskId="{{$item->tasks_id}}">
                                 <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                                     <p>{{ $item->title }}</p>
-                                    <p class="hidden task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
+                                    <p class="hidden whitespace-pre-wrap task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
                                 </div>    
                             </div>
                         @endforeach
-                        <x-task-modal :tasks="$tasks" />
+                        <x-task-modal-thinking />
                     </div>
                 </div>
             </div>
@@ -36,11 +36,11 @@
                             <div class="active:pt-1 task" data-taskId="{{$item->tasks_id}}">
                                 <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                                     <p>{{ $item->title }}</p>
-                                    <p class="hidden task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
+                                    <p class="hidden whitespace-pre-wrap task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
                                 </div>    
                             </div>
                         @endforeach
-                        <x-task-modal :tasks="$tasks" />
+                        <x-task-modal-doing />
                     </div>
                 </div>
             </div>
@@ -52,11 +52,11 @@
                             <div class="active:pt-1 task" data-taskId="{{$item->tasks_id}}">
                                 <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                                     <p>{{ $item->title }}</p>
-                                    <p class="hidden task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
+                                    <p class="hidden whitespace-pre-wrap task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
                                 </div>    
                             </div>
                         @endforeach
-                        <x-task-modal :tasks="$tasks" />
+                        <x-task-modal-done />
                     </div>
                 </div>
             </div>

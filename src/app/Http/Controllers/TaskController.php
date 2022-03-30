@@ -25,6 +25,10 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $tasks = new Task;
+        $request->validate([
+            'title' => 'required',
+            'contents' => 'required'
+        ]);
         $tasks->fill($request->all())->save();
         return redirect()->route('tasks');
     }
