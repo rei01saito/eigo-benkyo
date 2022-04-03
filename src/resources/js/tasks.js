@@ -8,6 +8,37 @@ function Task(){
     const takeBack = document.querySelector('#take-back');
     const exhaust = document.querySelector('#exhaust');
 
+    $('.task').draggable({
+        revert: true,
+        revertDuration: 0
+    });
+
+    $('.trash-can').droppable({
+        over: function(event, ui) {
+            $('#trash-can').addClass('bg-gray-300');
+        },
+        out: function() {
+            $('#trash-can').removeClass('bg-gray-300');
+        },
+        drop: function(event, ui) {
+            if (confirm('削除しますか？') ) {
+                let dragEl = ui.draggable[0];
+                dragEl.remove();
+            };
+            $('#trash-can').removeClass('bg-gray-300')
+        },
+    })
+
+    $('.task-card').droppable({
+        drop: function(event, ui) {
+            let dragEl = ui.draggable[0];
+            let el = $(this).find('.task-index')
+            $(dragEl).appendTo(el);
+
+            // 非同期でpriorityを変更
+        }
+    })
+
     if (tasks.length || trashcan || takeBack || exhaust) {
         
         for (let task of tasks) {
@@ -110,7 +141,7 @@ function Task(){
                         document.querySelector('#finish-icon').classList.remove('hidden');
                         let finishIntervalId = setTimeout(function() {
                             document.querySelector('#finish-icon').classList.add('hidden');
-                        }, 3000)
+                        }, 5000)
     
                         // のちにここに何回達成したかを更新する同期処理を追加
                         location.reload();
