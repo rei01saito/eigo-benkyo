@@ -33,6 +33,7 @@ Route::get('/tasks/softDelete/{id}', [TaskController::class, 'softDelete'])->nam
 Route::get('/tasks/trashcan', [TaskController::class, 'trashcan'])->name('trashcan');
 Route::get('/tasks/restore', [TaskController::class, 'restore'])->name('restore');
 Route::get('/tasks/forceDelete', [TaskController::class, 'forceDelete'])->name('forceDelete');
+Route::get('/tasks/update/{id}/{priority_id}', [TaskController::class, 'update'])->name('tasks-update');
 Route::post('/tasks/store', [TaskController::class, 'store'])->name('tasks-store');
 
 

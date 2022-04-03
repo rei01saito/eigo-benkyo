@@ -16,7 +16,7 @@
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
                         <p class="text-2xl text-center">検討中のTask</p>
-                        <div class="task-index">
+                        <div class="task-index" data-priority-id='0'>
                             @foreach ($thinking as $item)
                                 <div class="active:pt-1 task" data-taskId="{{$item->tasks_id}}">
                                     <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
@@ -34,7 +34,7 @@
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
                         <p class="text-2xl text-center">実行中のTask</p>
-                        <div class="task-index">
+                        <div class="task-index" data-priority-id='1'>
                             @foreach ($doing as $item)
                                 <div class="active:pt-1 task" data-taskId="{{$item->tasks_id}}">
                                     <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
@@ -52,7 +52,7 @@
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
                         <p class="text-2xl text-center">完了したTask</p>
-                        <div class="task-index">
+                        <div class="task-index" data-priority-id='2'>
                             @foreach ($done as $item)
                                 <div class="active:pt-1 task" data-taskId="{{$item->tasks_id}}">
                                     <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
