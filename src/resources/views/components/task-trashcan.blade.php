@@ -1,5 +1,5 @@
 <div class="text-center pt-4 w-full trash-can">
-    <i class="fa-solid fa-trash-can text-6xl cursor-pointer active:bg-gray-300" data-modal-toggle="authentication-trashcan-modal"></i>
+    <i class="fa-solid fa-trash-can text-6xl cursor-pointer active:bg-gray-300" data-modal-toggle="authentication-trashcan-modal" id="trash-can"></i>
 </div>
     
 <div id="authentication-trashcan-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
