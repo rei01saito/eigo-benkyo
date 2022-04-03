@@ -24,6 +24,14 @@ function Task(){
             if (confirm('削除しますか？') ) {
                 let dragEl = ui.draggable[0];
                 dragEl.remove();
+                let taskId = dragEl.getAttribute('data-taskId');
+                let url = '/tasks/softDelete/' + taskId;
+                fetch(url, {
+                    method: 'GET'
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
             };
             $('#trash-can').removeClass('bg-gray-300')
         },
@@ -36,6 +44,15 @@ function Task(){
             $(dragEl).appendTo(el);
 
             // 非同期でpriorityを変更
+            let priorityId = el.data('priority-id');
+            let taskId = dragEl.getAttribute('data-taskId');
+            let url = '/tasks/update/' + taskId + '/' + priorityId;
+            fetch(url, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
         }
     })
 

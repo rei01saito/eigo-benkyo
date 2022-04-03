@@ -5088,6 +5088,17 @@ function Task() {
       if (confirm('削除しますか？')) {
         var dragEl = ui.draggable[0];
         dragEl.remove();
+        var taskId = dragEl.getAttribute('data-taskId');
+        var url = '/tasks/softDelete/' + taskId;
+        fetch(url, {
+          method: 'GET'
+        }).then(function (response) {
+          return response.json();
+        }).then(function (data) {
+          return console.log(data);
+        })["catch"](function (err) {
+          return console.log(err);
+        });
       }
 
       ;
@@ -5099,6 +5110,19 @@ function Task() {
       var dragEl = ui.draggable[0];
       var el = $(this).find('.task-index');
       $(dragEl).appendTo(el); // 非同期でpriorityを変更
+
+      var priorityId = el.data('priority-id');
+      var taskId = dragEl.getAttribute('data-taskId');
+      var url = '/tasks/update/' + taskId + '/' + priorityId;
+      fetch(url, {
+        method: 'GET'
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        return console.log(data);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
   });
 

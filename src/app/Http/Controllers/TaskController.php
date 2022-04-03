@@ -68,4 +68,16 @@ class TaskController extends Controller
         $tasks->forceDelete();
         return redirect()->route('tasks')->with('msg', 'ゴミ箱の中身を削除しました。');
     }
+
+    public function update($id, $priority_id)
+    {
+        $task = Task::where('tasks_id', $id);
+        $task->update(['priority' => $priority_id]);
+
+        return response()->json([
+            'msg' => '通信成功',
+            'priority' => $priority_id
+        ]);
+    }
+
 }
