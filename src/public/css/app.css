@@ -1370,6 +1370,12 @@ input:checked + .toggle-bg {
 .overflow-x-hidden {
   overflow-x: hidden;
 }
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
 .whitespace-pre-wrap {
   white-space: pre-wrap;
 }
@@ -1673,6 +1679,9 @@ input:checked + .toggle-bg {
 }
 .pt-16 {
   padding-top: 4rem;
+}
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 .text-center {
   text-align: center;

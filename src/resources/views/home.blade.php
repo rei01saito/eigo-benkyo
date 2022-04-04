@@ -33,11 +33,11 @@
 
     <!-- Task一覧 -->
     @auth
-        <div class="border bg-white rounded-lg p-6 m-3 h-72 w-64">
+        <div class="border bg-white rounded-lg p-6 m-3 h-80 w-72 overflow-y-scroll">
             <p class="font-bold text-2xl pb-6">Taskの指定</p>
             <ul>
                 @foreach ($tasks as $item)
-                    <li id="setTimer" class="hover:underline hover:text-gray-400 cursor-pointer" data-tasks-id="{{ $item->tasks_id }}">{{ $item->title }}</li>
+                    <li id="setTimer" class="hover:underline hover:text-gray-400 cursor-pointer pb-2" data-tasks-id="{{ $item->tasks_id }}">{{ $item->title }}</li>
                     <li class="hidden">{{ $item->contents }}</li>
                 @endforeach
             </ul>
