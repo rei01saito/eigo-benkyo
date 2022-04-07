@@ -15,11 +15,12 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('tasks_id');
-            $table->unsignedBigInteger('users_id')->nullable();
+            $table->foreignId('user_id')->constrained('users');
             $table->unsignedInteger('priority');
             $table->string('title', 30);
             $table->string('contents');
             $table->date('deadline')->nullable();
+            
             $table->timestamps();
         });
     }

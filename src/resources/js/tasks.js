@@ -24,8 +24,12 @@ export function TaskEvent(){
         dragEl.remove();
         let taskId = dragEl.getAttribute('data-taskId');
         let url = '/tasks/softDelete/' + taskId;
+
         fetch(url, {
-            method: 'GET'
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         })
         .then(response => response.json())
         .then(data => console.log(data))
@@ -74,8 +78,10 @@ export function TaskEvent(){
 
           const url = '/tasks/softDelete/' + taskId;
           fetch(url, {
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           })
           .then(response => response.json())

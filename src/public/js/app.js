@@ -5177,7 +5177,10 @@ function TaskEvent() {
         var taskId = dragEl.getAttribute('data-taskId');
         var url = '/tasks/softDelete/' + taskId;
         fetch(url, {
-          method: 'GET'
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
         }).then(function (response) {
           return response.json();
         }).then(function (data) {
@@ -5233,8 +5236,10 @@ function TaskEvent() {
             task.classList.add('hidden');
             var url = '/tasks/softDelete/' + taskId;
             fetch(url, {
+              method: 'POST',
               headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
             }).then(function (response) {
               return response.json();
