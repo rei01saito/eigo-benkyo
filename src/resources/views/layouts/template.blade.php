@@ -2,8 +2,9 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>Eigoの勉強</title>
+    <title>Katask</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <script src="{{ mix('js/app.js') }}"></script>
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
@@ -11,7 +12,7 @@
 <body class="h-screen">
     <header class="border px-3 py-2 bg-blue-200 shadow fixed w-full">
         <nav class="flex items-center">
-            <p class="text-4xl px-4"><a href="/">Eigoの勉強</a></p>
+            <p class="text-4xl px-4"><a href="/">Katask</a></p>
             <ul class="flex">
                             
                 @auth

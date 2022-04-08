@@ -18,7 +18,7 @@ export function HomeEvent() {
         timerDisplay.setAttribute('data-timer-amount', remain);
         let hour = Math.floor(remain / (60 * 1000));
         let min = Math.floor((remain % (60 * 1000)) / 1000);
-        timerDisplay.textContent = ('0' + hour).slice(-2) + ':' + ('0' + min).slice(-2);
+        timerDisplay.textContent = hour + ':' + ('0' + min).slice(-2);
         if (remain < 1) {
           clearInterval(intervalId);
           document.querySelector('#finish-icon').classList.remove('hidden');
@@ -60,12 +60,13 @@ export function HomeEvent() {
         .then(response => response.json())
         .then(data => {
           if (data["timer"]) {
-              timerDisplay.textContent = ('0' + data["timer"]).slice(-2) + ':00';
-              timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
+            timerDisplay.textContent = data["timer"] + ':00';
+            timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
           } else {
-              timerDisplay.textContent = '60:00'
-              timerDisplay.setAttribute('data-timer-amount', '1800');
+            timerDisplay.textContent = '60:00'
+            timerDisplay.setAttribute('data-timer-amount', '1800');
           }
+          $('#task-title').text(data["title"]);
         })
         .catch(err => {
           alert('通信に失敗しました。')

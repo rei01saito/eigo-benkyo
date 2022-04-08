@@ -5059,7 +5059,7 @@ function HomeEvent() {
         timerDisplay.setAttribute('data-timer-amount', remain);
         var hour = Math.floor(remain / (60 * 1000));
         var min = Math.floor(remain % (60 * 1000) / 1000);
-        timerDisplay.textContent = ('0' + hour).slice(-2) + ':' + ('0' + min).slice(-2);
+        timerDisplay.textContent = hour + ':' + ('0' + min).slice(-2);
 
         if (remain < 1) {
           clearInterval(intervalId);
@@ -5114,12 +5114,14 @@ function HomeEvent() {
             return response.json();
           }).then(function (data) {
             if (data["timer"]) {
-              timerDisplay.textContent = ('0' + data["timer"]).slice(-2) + ':00';
+              timerDisplay.textContent = data["timer"] + ':00';
               timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
             } else {
               timerDisplay.textContent = '60:00';
               timerDisplay.setAttribute('data-timer-amount', '1800');
             }
+
+            $('#task-title').text(data["title"]);
           })["catch"](function (err) {
             alert('通信に失敗しました。');
           });
@@ -5177,7 +5179,10 @@ function TaskEvent() {
         var taskId = dragEl.getAttribute('data-taskId');
         var url = '/tasks/softDelete/' + taskId;
         fetch(url, {
-          method: 'GET'
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
         }).then(function (response) {
           return response.json();
         }).then(function (data) {
@@ -5233,8 +5238,10 @@ function TaskEvent() {
             task.classList.add('hidden');
             var url = '/tasks/softDelete/' + taskId;
             fetch(url, {
+              method: 'POST',
               headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
             }).then(function (response) {
               return response.json();
