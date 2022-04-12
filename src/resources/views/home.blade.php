@@ -35,7 +35,14 @@
                 <div class="animate-ping h-4 w-4 bg-blue-600 rounded-full"></div>
             </div>
         </div>
-        <p class="text-center text-2xl font-bold pt-12" id="task-title">{{ $tasks[0]->title }}</p>
+        
+        <p class="text-center text-2xl font-bold pt-12" id="task-title">
+            @isset ($tasks[0]->title)
+                {{ $tasks[0]->title }}
+            @endisset
+        </p>
+
+
         <div class="flex justify-center pt-12">
             <button id="time-button" class="text-white rounded px-3 py-2 bg-blue-600 active:bg-blue-900">start</button>
         </div>

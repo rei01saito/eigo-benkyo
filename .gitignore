@@ -1,2 +1,4 @@
 .env
 docker/mysql/data/
+docker/db-test/data/
+tmpdir/
