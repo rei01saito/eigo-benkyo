@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTimerToTasks extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddTimerToTasks extends Migration
      */
     public function up()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->integer('timer');
+        Schema::create('tags', function (Blueprint $table) {
+            $table->bigIncrements('tags_id');
+            $table->string('tags_name', '30');
+            $table->foreignId('user_id')->constrained('users');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddTimerToTasks extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->dropColumn('timer');
-        });
+        Schema::dropIfExists('tags');
     }
 }

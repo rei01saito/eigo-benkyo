@@ -6,8 +6,8 @@ export function HomeEvent() {
   let clickFlag = true;
 
   button.addEventListener('click', function() {
-    if (clickFlag) {
-      let amount = timerDisplay.getAttribute('data-timer-amount');
+    let amount = timerDisplay.getAttribute('data-timer-amount');
+    if (clickFlag && (amount > 0)) {
       let now = new Date();
       let end = new Date(now.getTime() + amount * 1000);
       let time = end.getTime() // 残りtimestamp

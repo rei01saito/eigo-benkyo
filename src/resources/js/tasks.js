@@ -1,3 +1,4 @@
+import { TaskFormValidate } from "./taskFormValidate.js";
 export function TaskEvent(){
 
   // Task
@@ -134,4 +135,9 @@ export function TaskEvent(){
     })
     
   }
+
+  TaskFormValidate($('#add-thinking'));
+  TaskFormValidate($('#add-doing'));
+  TaskFormValidate($('#add-done'));
+
 }

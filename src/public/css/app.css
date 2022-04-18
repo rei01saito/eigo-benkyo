@@ -1042,17 +1042,17 @@ input:checked + .toggle-bg {
 .mt-3 {
   margin-top: 0.75rem;
 }
-.ml-1 {
-  margin-left: 0.25rem;
-}
-.-mr-2 {
-  margin-right: -0.5rem;
-}
 .mb-4 {
   margin-bottom: 1rem;
 }
 .mt-4 {
   margin-top: 1rem;
+}
+.ml-1 {
+  margin-left: 0.25rem;
+}
+.-mr-2 {
+  margin-right: -0.5rem;
 }
 .ml-4 {
   margin-left: 1rem;
@@ -1135,6 +1135,9 @@ input:checked + .toggle-bg {
 .h-80 {
   height: 20rem;
 }
+.h-20 {
+  height: 5rem;
+}
 .h-16 {
   height: 4rem;
 }
@@ -1143,9 +1146,6 @@ input:checked + .toggle-bg {
 }
 .h-6 {
   height: 1.5rem;
-}
-.h-20 {
-  height: 5rem;
 }
 .h-screen {
   height: 100vh;
@@ -1219,6 +1219,12 @@ input:checked + .toggle-bg {
 .max-w-6xl {
   max-width: 72rem;
 }
+.max-w-sm {
+  max-width: 24rem;
+}
+.max-w-lg {
+  max-width: 32rem;
+}
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1230,6 +1236,9 @@ input:checked + .toggle-bg {
 }
 .grow {
   flex-grow: 1;
+}
+.basis-full {
+  flex-basis: 100%;
 }
 .origin-top-left {
   transform-origin: top left;
@@ -1319,6 +1328,9 @@ input:checked + .toggle-bg {
 }
 .flex-wrap {
   flex-wrap: wrap;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
 }
 .items-start {
   align-items: flex-start;
@@ -1635,9 +1647,6 @@ input:checked + .toggle-bg {
 .pt-12 {
   padding-top: 3rem;
 }
-.pt-24 {
-  padding-top: 6rem;
-}
 .pb-6 {
   padding-bottom: 1.5rem;
 }
@@ -1667,6 +1676,9 @@ input:checked + .toggle-bg {
 }
 .pt-1 {
   padding-top: 0.25rem;
+}
+.pt-24 {
+  padding-top: 6rem;
 }
 .pt-6 {
   padding-top: 1.5rem;
@@ -1730,6 +1742,9 @@ input:checked + .toggle-bg {
 .font-semibold {
   font-weight: 600;
 }
+.font-normal {
+  font-weight: 400;
+}
 .uppercase {
   text-transform: uppercase;
 }
@@ -1753,6 +1768,9 @@ input:checked + .toggle-bg {
 }
 .tracking-wider {
   letter-spacing: 0.05em;
+}
+.tracking-tight {
+  letter-spacing: -0.025em;
 }
 .text-gray-500 {
   --tw-text-opacity: 1;
@@ -1782,6 +1800,10 @@ input:checked + .toggle-bg {
   --tw-text-opacity: 1;
   color: rgb(5 122 85 / var(--tw-text-opacity));
 }
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}
 .text-gray-800 {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
@@ -1789,10 +1811,6 @@ input:checked + .toggle-bg {
 .text-blue-600 {
   --tw-text-opacity: 1;
   color: rgb(28 100 242 / var(--tw-text-opacity));
-}
-.text-gray-600 {
-  --tw-text-opacity: 1;
-  color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 .text-indigo-700 {
   --tw-text-opacity: 1;
@@ -1809,6 +1827,18 @@ input:checked + .toggle-bg {
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(240 82 82 / var(--tw-text-opacity));
+}
+.text-gray-100 {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity));
+}
+.text-blue-700 {
+  --tw-text-opacity: 1;
+  color: rgb(26 86 219 / var(--tw-text-opacity));
 }
 .underline {
   -webkit-text-decoration-line: underline;
@@ -9714,6 +9744,9 @@ readers do not read off random characters that represent icons */
 .fa-zhihu:before {
   content: "\f63f";
 }
+.hover\:cursor-pointer:hover {
+  cursor: pointer;
+}
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -9992,6 +10025,9 @@ readers do not read off random characters that represent icons */
   --tw-placeholder-opacity: 1;
   color: rgb(156 163 175 / var(--tw-placeholder-opacity));
 }
+.dark .dark\:ring-offset-gray-800 {
+  --tw-ring-offset-color: #1F2937;
+}
 .dark .dark\:hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(26 86 219 / var(--tw-bg-opacity));
@@ -10007,6 +10043,10 @@ readers do not read off random characters that represent icons */
 .dark .dark\:hover\:bg-gray-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+}
+.dark .dark\:hover\:bg-gray-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 .dark .dark\:hover\:text-white:hover {
   --tw-text-opacity: 1;
@@ -10027,6 +10067,10 @@ readers do not read off random characters that represent icons */
 .dark .dark\:focus\:ring-red-800:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(155 28 28 / var(--tw-ring-opacity));
+}
+.dark .dark\:focus\:ring-blue-600:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(28 100 242 / var(--tw-ring-opacity));
 }
 @media (min-width: 640px) {
 
@@ -10091,6 +10135,10 @@ readers do not read off random characters that represent icons */
     border-radius: 0.5rem;
   }
 
+  .sm\:p-6 {
+    padding: 1.5rem;
+  }
+
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -10142,6 +10190,10 @@ readers do not read off random characters that represent icons */
   }
 }
 @media (min-width: 1024px) {
+
+  .lg\:p-8 {
+    padding: 2rem;
+  }
 
   .lg\:px-8 {
     padding-left: 2rem;

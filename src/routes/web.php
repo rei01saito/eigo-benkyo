@@ -33,9 +33,12 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/tasks/store', 'store')->name('tasks-store');
     });
 
-    Route::get('/status', [StatusController::class, 'index'])->name('status');
+    // Route::get('/status', [StatusController::class, 'index'])->name('status');
 
-    Route::get('/mypage', [UserController::class, 'index'])->name('mypage');
+    Route::controller(UserController::class)->group(function() {
+        Route::get('/mypage', 'index')->name('mypage');
+        Route::get('/mypage/edit', 'edit')->name('mypage-edit');
+    });
 });
 
 Route::get('/dashboard', function () {

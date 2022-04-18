@@ -5047,8 +5047,9 @@ function HomeEvent() {
   var timerDisplay = document.querySelector('#timer-display');
   var clickFlag = true;
   button.addEventListener('click', function () {
-    if (clickFlag) {
-      var amount = timerDisplay.getAttribute('data-timer-amount');
+    var amount = timerDisplay.getAttribute('data-timer-amount');
+
+    if (clickFlag && amount > 0) {
       var now = new Date();
       var end = new Date(now.getTime() + amount * 1000);
       var time = end.getTime(); // 残りtimestamp
@@ -5137,6 +5138,63 @@ function HomeEvent() {
 
 /***/ }),
 
+/***/ "./resources/js/taskFormValidate.js":
+/*!******************************************!*\
+  !*** ./resources/js/taskFormValidate.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TaskFormValidate": () => (/* binding */ TaskFormValidate)
+/* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+function TaskFormValidate(element) {
+  element.on('submit', function (e) {
+    if ($('.err-msg')) {
+      $('.err-msg').remove();
+    }
+
+    var form = $($(e.currentTarget)[0]);
+    var flag = true; // バリデーション
+    // タイトル
+
+    if (!form.find('input[name="title"]').val()) {
+      form.find('input[name="title"]').after('<p class="err-msg text-red-500">タイトルを入力して下さい</p>');
+      flag = false;
+    } else if (form.find('input[name="title"]').val().length > 30) {
+      form.find('input[name="title"]').after('<p class="err-msg text-red-500">タイトルは30文字以内で入力して下さい</p>');
+      flag = false;
+    } // 内容
+
+
+    if (form.find('textarea[name="contents"]').val().length > 255) {
+      form.find('textarea[name="contents"]').after('<p class="err-msg text-red-500">内容は255文字以内で入力して下さい</p>');
+      flag = false;
+    } // タイマー
+
+
+    var pattern = /^([1-9]\d*|0)$/;
+
+    if (!form.find('input[name="timer"]').val()) {
+      form.find('input[name="timer"]').after('<p class="err-msg text-red-500">タイマー時間を入力して下さい</p>');
+      flag = false;
+    } else if (!pattern.test(form.find('input[name="timer"]').val()) || form.find('input[name="timer"]').val() < 1) {
+      form.find('input[name="timer"]').after('<p class="err-msg text-red-500">タイマー時間には0以上の数字を入力して下さい</p>');
+      flag = false;
+    }
+
+    if (flag) {
+      form.submit();
+    }
+
+    return false;
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/tasks.js":
 /*!*******************************!*\
   !*** ./resources/js/tasks.js ***!
@@ -5148,12 +5206,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TaskEvent": () => (/* binding */ TaskEvent)
 /* harmony export */ });
+/* harmony import */ var _taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskFormValidate.js */ "./resources/js/taskFormValidate.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 function TaskEvent() {
   // Task
@@ -5296,6 +5356,10 @@ function TaskEvent() {
       location.href = "/tasks/forceDelete";
     });
   }
+
+  (0,_taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__.TaskFormValidate)($('#add-thinking'));
+  (0,_taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__.TaskFormValidate)($('#add-doing'));
+  (0,_taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__.TaskFormValidate)($('#add-done'));
 }
 
 /***/ }),

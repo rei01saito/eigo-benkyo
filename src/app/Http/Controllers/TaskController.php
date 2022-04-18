@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Task;
 
 class TaskController extends Controller
@@ -26,13 +27,36 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $tasks = new Task;
-        $request->validate([
-            'title' => 'required',
-            'contents' => 'required'
-        ]);
+        // $request->validate([
+        //     'title' => 'required|max:30',
+        //     'contents' => 'required|max:255',
+        //     'timer' => 'required|integer'
+        // ]);
         $request->merge(['user_id' => Auth::id()]);
-        $tasks->fill($request->all())->save();
-        return redirect()->route('tasks');
+        
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:30',
+            'contents' => 'required|max:255',
+            'timer' => 'required|integer'
+        ],
+        [
+            'title.required' => 'タイトルを入力して下さい。',
+            'title.max' => 'タイトルは30文字以内で入力して下さい。',
+            'contents.required' => '内容を入力して下さい。',
+            'contents.max' => '内容は255文字以内で入力して下さい。',
+            'timer.required' => 'タイマーの値を入力して下さい。',
+            'timer.integer' => 'タイマーの値には数字を入力して下さい。'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('tasks')->withErrors($validator);
+        } else {
+            $tasks->fill($request->all())->save();
+            return redirect()->route('tasks');
+        }
+
+        // var_dump($validator->messages());
+        
     }
 
     public function softDelete($id)
