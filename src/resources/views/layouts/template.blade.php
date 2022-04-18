@@ -18,8 +18,7 @@
                 @auth
                     <li class="px-4"><a href="/dashboard">Dashboard</a></li>
                     <li class="pr-4"><a href="/tasks">Tasks</a></li>
-                    <li class="pr-4"><a href="/status">進捗状況を見る</a></li>
-                    <li><a href="mypage">マイページ</a></li>
+                    <li><a href="/mypage">マイページ</a></li>
                 @else 
                     <li class="px-4"><a href="/login">login</a></li>
                     <li class="pr-4"><a href="/register">signup</a></li>

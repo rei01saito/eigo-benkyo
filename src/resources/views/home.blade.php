@@ -19,8 +19,8 @@
                         {{ $tasks[0]->timer }}:00
                     </p>
                 @else
-                    <p id="timer-display" class="text-6xl absolute top-80" data-timer-amount="3600">
-                        60:00 (仮)
+                    <p id="timer-display" class="text-6xl absolute top-80" data-timer-amount="0">
+                        タスクが登録されていません
                     </p>
                 @endisset
             @endauth
@@ -37,9 +37,11 @@
         </div>
         
         <p class="text-center text-2xl font-bold pt-12" id="task-title">
-            @isset ($tasks[0]->title)
-                {{ $tasks[0]->title }}
-            @endisset
+            @auth    
+                @isset ($tasks[0]->title)
+                    {{ $tasks[0]->title }}
+                @endisset
+            @endauth
         </p>
 
 

@@ -1,3 +1,4 @@
+{{-- 後に拡張機能として追加 --}}
 @extends('layouts.template')
 
 @section('breadcrumbs')

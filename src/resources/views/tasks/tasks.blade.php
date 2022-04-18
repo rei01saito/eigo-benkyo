@@ -8,7 +8,12 @@
     <div class="h-screen">
         <!-- Trash can -->
         <x-task-trashcan />
-        
+
+        <!-- エラーメッセージ -->
+        @if (!empty($errors->all()))
+            <p class="text-red-500 text-center">エラーが発生しました。リロードして下さい。</p>
+        @endif
+
         <!-- tasks -->
         <div class="text-center pt-12 pb-1">ダブルクリックで削除!</div>
         <div class="flex">
@@ -19,7 +24,7 @@
                         <div class="task-index" data-priority-id='0'>
                             @foreach ($thinking as $item)
                                 <div class="task" data-taskId="{{$item->tasks_id}}">
-                                    <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
+                                    <div class="hover:cursor-pointer mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                                         <p>{{ $item->title }}</p>
                                         <p class="hidden whitespace-pre-wrap task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
                                     </div>    
@@ -37,7 +42,7 @@
                         <div class="task-index" data-priority-id='1'>
                             @foreach ($doing as $item)
                                 <div class="task" data-taskId="{{$item->tasks_id}}">
-                                    <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
+                                    <div class="hover:cursor-pointer mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                                         <p>{{ $item->title }}</p>
                                         <p class="hidden whitespace-pre-wrap task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
                                     </div>    
@@ -55,7 +60,7 @@
                         <div class="task-index" data-priority-id='2'>
                             @foreach ($done as $item)
                                 <div class="task" data-taskId="{{$item->tasks_id}}">
-                                    <div class="mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
+                                    <div class="hover:cursor-pointer mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                                         <p>{{ $item->title }}</p>
                                         <p class="hidden whitespace-pre-wrap task-contents mx-3 my-1 p-1">{{ $item->contents }}</p>
                                     </div>    

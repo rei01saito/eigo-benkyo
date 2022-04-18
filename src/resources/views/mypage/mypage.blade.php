@@ -5,16 +5,19 @@
 @endsection
 
 @section('main')
-    <div class="pt-3 h-full">
-        <div class="profile-img flex justify-center">
-            <div class="h-72 w-72 border rounded-full bg-gray-100 flex justify-center items-center">
-                <p>画像</p>
-            </div>
+    <div class="pt-3 h-full flex justify-center">
+
+        <div class="block p-6 max-w-lg w-full bg-white rounded-lg border border-gray-200 shadow-md text-center">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ $user_name }}</h5>
+            @foreach ($tags as $tag)
+                <p class="font-normal text-gray-700">{{ $tag }}</p>
+            @endforeach
+            <p class="font-normal text-gray-300">{{ $created_at }}から利用しています。</p>
+            <p>(タグ編集はモーダル)</p>
+            <x-button>タグを編集する</x-button>
+            <x-button onclick="location.href='/mypage/edit'">自己情報を編集する</x-button>
+
         </div>
-        <div class="pt-12 px-12">
-            <div class="pt-6 pl-6 bg-gray-100 border border-2 rounded-lg h-80">
-                <div>説明文</div>
-            </div>
-        </div>
+
     </div>
 @endsection
