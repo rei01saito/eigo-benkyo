@@ -1,12 +1,6 @@
 import { TaskFormValidate } from "./taskFormValidate.js";
 export function TaskEvent(){
 
-  // Task
-  const tasks = document.querySelectorAll('.task');
-  const trashcan = document.querySelector('.fa-trash-can');
-  const takeBack = document.querySelector('#take-back');
-  const exhaust = document.querySelector('#exhaust');
-
   $('.task').draggable({
     revert: true,
     revertDuration: 0
@@ -59,25 +53,22 @@ export function TaskEvent(){
     }
   })
 
-  if (tasks.length || trashcan || takeBack || exhaust) {
-      
-    for (let task of tasks) {
-      task.addEventListener('click', event => {
-        const taskContents = event.currentTarget.querySelector('.task-contents');
-        taskContents.classList.toggle('hidden');
+  if ($('.task').length) {  
+    $('.task').each(function(index, element) {
+      $(element).on('click', function() {
+        $(this).find('.task-contents').toggleClass('hidden');
+        $(this).find('.task-timer').toggleClass('hidden');
       });
-
-      task.addEventListener('dblclick', event => {
-        
-        const taskId = event.currentTarget.getAttribute('data-taskId');
+  
+      $(element).on('dblclick', function() {
+        const taskId = $(this).data('taskid');
         if (confirm('削除しますか？')) {
-
-          const loadIcon = document.querySelector('.load-icon')
-          loadIcon.classList.remove('hidden');
-          task.before(loadIcon);
-          task.classList.add('hidden');
-
-          const url = '/tasks/softDelete/' + taskId;
+  
+          $(this).before($('.load-icon'));
+          $(this).addClass('hidden');
+          $('.load-icon').removeClass('hidden');
+  
+          let url = '/tasks/softDelete/' + taskId;
           fetch(url, {
             method: 'POST',
             headers: {
@@ -88,56 +79,71 @@ export function TaskEvent(){
           .then(response => response.json())
           .then(data => {
             console.log('success!');
-            loadIcon.classList.add('hidden');
-            task.remove();
+            $('.load-icon').addClass('hidden');
+            $(this).remove();
           })
           .catch(err => {
             console.log('fail');
-            loadIcon.classList.add('hidden');
-            task.classList.remove('hidden');
+            $('.load-icon').addClass('hidden');
+            $(this).removeClass('hidden');
           })
         }
       });
-    }
-
-    trashcan.addEventListener('click', () => {
-      const loadIcon = document.querySelector('.load-icon')
-      loadIcon.classList.remove('hidden');
-      document.querySelector('.trashed-index').appendChild(loadIcon);
-      
-      fetch('/tasks/trashcan', {
-          
-      })
-      .then(response => response.json())
-      .then(data => {
-        const ti = document.querySelector('.trashed-index');
-        ti.innerHTML = '';
-
-        if (data.length) {
-          data.forEach(t => {
-            const el = document.createElement('p');
-            el.setAttribute('class', 'px-3 py-1 hover:underline cursor-pointer');
-            el.textContent = t['title'];
-            ti.appendChild(el);
-          })
-        } else {
-          ti.innerHTML = 'ゴミ箱は空です。';
-        }
-      })
-    });
-
-    takeBack.addEventListener('click', () => {
-      location.href="/tasks/restore";
-    });
-
-    exhaust.addEventListener('click', () => {
-      location.href="/tasks/forceDelete";
-    })
-    
+    })  
   }
+
+  $('.edit-task').each(function(index, element) {
+    $(element).on('click', function(){
+      // あらかじめタスクたちにはdata属性を持たせておき、ここで挿入する
+      $('#edit-form').find('input[name="title"]').val($(this).data('task-title'));
+      $('#edit-form').find('input[name="contents"]').val($(this).data('task-contents'));
+      $('#edit-form').find('input[name="timer"]').val($(this).data('task-timer'));
+      $('#edit-form').find('input[name="priority"]').val($(this).closest('.task-index').data('priority-id'));
+      $('#edit-form').find('input[name="tasks_id"]').val($(this).data('tasks-id'));
+      
+      let url = '/tasks/' + $(this).data('tasks-id');
+      $('#edit-form').attr('action', url);
+    });
+
+    $(element).closest('button').on('click', function(e) {
+      e.stopPropagation();
+    })
+  });
+
+  $('.fa-trash-can').on('click', function() {
+    $('.trashed-index').append($('.load-icon'));
+    $('.load-icon').removeClass('hidden');
+    
+    fetch('/tasks/trashcan', {
+        
+    })
+    .then(response => response.json())
+    .then(data => {
+      $('.trashed-index').html('');
+
+      if (data.length) {
+        data.forEach(t => {
+          const el = $('<p></p>')
+          el.attr('class', 'px-3 py-1 hover:underline cursor-pointer');
+          el.text(t['title']);
+          $('.trashed-index').append(el);
+        })
+      } else {
+        $('.trashed-index').text('ゴミ箱は空です。');
+      }
+    })
+  });
+
+  $('#take-back').on('click', () => {
+    location.href="/tasks/restore";
+  });
+  
+  $('#exhaust').on('click', () => {
+    location.href="/tasks/forceDelete";
+  })
 
   TaskFormValidate($('#add-thinking'));
   TaskFormValidate($('#add-doing'));
   TaskFormValidate($('#add-done'));
-
+  TaskFormValidate($('#edit-form'));
 }

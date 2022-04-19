@@ -14,7 +14,7 @@
                 @csrf
                 <h3 class="text-xl font-medium text-gray-900 dark:text-white">タグを編集する</h3>
                 <div class="tag">
-                  
+                
                     @if (!$tags->isEmpty())
                         @foreach ($tags as $tag)
                             <div class="flex items-center">

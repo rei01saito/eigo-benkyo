@@ -13,9 +13,13 @@ export function TagEvent() {
       hiddenTag.removeClass('hidden hidden-tag');
     })
   })
+
   $('.tag-minus').each(function(index, element) {
     $(element).on('click', function() {
       if ($('.tag-minus').length === 2) {
+        if (confirm('削除してもよろしいですか？')) {
+          location.href="/mypage/tag/delete";
+        }
         return false;
       }
       $(this).parent().parent().remove();

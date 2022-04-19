@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
@@ -27,48 +28,23 @@ class UserController extends Controller
 
     public function edit()
     {
-        return view('mypage/edit');
-    }
-
-    public function tagStore(Request $request)
-    {
-        try {
-
-            DB::beginTransaction();
-
-            Tag::where('user_id', Auth::id())->delete();
-            $validator = Validator::make($request->all(), [
-                'tag' => 'required|array',
-                'tag.*' => 'max:30'
-            ]);
-            $request->collect('tag')->each(function($t) {
-                Tag::create([
-                    'tags_name' => $t,
-                    'user_id' => Auth::id()
-                ]);
-            });
-
-            DB::commit();
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            if ($validator->fails()) {
-                return redirect()->route('mypage')->withErrors($validator);
-            } 
-        }
-        return redirect()->route('mypage');
+        $user = User::find(Auth::id());
+        return view('mypage/edit')
+            ->with('user', $user);
     }
 
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_name' => 'required',
-            'email' => 'required',
-            'password' => 'required'
+            'user_name' => 'required|max:30',
+            'email' => 'required|max:50',
+            'password' => ['required', Password::defaults()]
         ],
         [
             'user_name.required' => '名前を入力して下さい。',
+            'user_name.max' => '名前は30文字以内で入力して下さい。',
             'email.required' => 'メールアドレスを入力して下さい。',
+            'email.max' => 'メールアドレスは50文字以内で入力して下さい。',
             'password' => 'パスワードを入力して下さい。'
         ]);
         if ($validator->fails()) {

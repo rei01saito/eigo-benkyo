@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('breadcrumbs')
-    <x-breadcrumbs />
+    <x-breadcrumbs args="マイページ|マイページ編集画面" urls="mypage|edit" />
 @endsection
 
 @section('main')
@@ -12,11 +12,11 @@
                 <h5 class="text-xl font-medium text-gray-900 dark:text-white">自己情報</h5>
                 <div>
                     <label for="user_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">名前</label>
-                    <input type="user_name" name="user_name" id="user_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name" required="">
+                    <input type="user_name" name="user_name" id="user_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Katask" value="{{ $user->name }}" required="">
                 </div>
                 <div>
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">メールアドレス</label>
-                    <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required="">
+                    <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="katask@email.com" value="{{ $user->email }}" required="">
                 </div>
                 <div>
                     <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">パスワード</label>
