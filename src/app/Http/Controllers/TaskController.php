@@ -27,11 +27,6 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $tasks = new Task;
-        // $request->validate([
-        //     'title' => 'required|max:30',
-        //     'contents' => 'required|max:255',
-        //     'timer' => 'required|integer'
-        // ]);
         $request->merge(['user_id' => Auth::id()]);
         
         $validator = Validator::make($request->all(), [
@@ -54,8 +49,6 @@ class TaskController extends Controller
             $tasks->fill($request->all())->save();
             return redirect()->route('tasks');
         }
-
-        // var_dump($validator->messages());
         
     }
 
@@ -71,7 +64,7 @@ class TaskController extends Controller
 
     public function trashcan()
     {
-        $trashed = Task::onlyTrashed()->get();
+        $trashed = Task::where('user_id', Auth::id())->onlyTrashed()->get();
         $list = [];
         foreach ($trashed as $t) {
             $list[] = $t;
@@ -83,7 +76,7 @@ class TaskController extends Controller
 
     public function restore()
     {
-        $tasks = Task::onlyTrashed();
+        $tasks = Task::where('user_id', Auth::id())->onlyTrashed();
         $tasks->restore();
         return redirect()->route('tasks')->with('msg', 'ゴミ箱の中身を元に戻しました。');
     }

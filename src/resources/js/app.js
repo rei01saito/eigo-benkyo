@@ -3,6 +3,7 @@ require('jquery-ui/ui/widgets/droppable');
 require('./bootstrap');
 import { HomeEvent } from './home.js';
 import { TaskEvent } from './tasks.js';
+import { TagEvent } from './tags.js';
 
 window.onload = () => {
   let path = location.pathname;
@@ -10,6 +11,8 @@ window.onload = () => {
     TaskEvent();
   } else if (path === "/") {
     HomeEvent();
+  } else if (path === "/mypage") {
+    TagEvent();
   }
 };
 

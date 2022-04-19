@@ -117,7 +117,7 @@ export function TaskEvent(){
           data.forEach(t => {
             const el = document.createElement('p');
             el.setAttribute('class', 'px-3 py-1 hover:underline cursor-pointer');
-            el.textContent = t['title'] + ':' + t['contents'];
+            el.textContent = t['title'];
             ti.appendChild(el);
           })
         } else {

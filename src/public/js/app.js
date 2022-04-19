@@ -4966,12 +4966,14 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./home.js */ "./resources/js/home.js");
 /* harmony import */ var _tasks_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tasks.js */ "./resources/js/tasks.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _tags_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tags.js */ "./resources/js/tags.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 __webpack_require__(/*! jquery-ui/ui/widgets/draggable */ "./node_modules/jquery-ui/ui/widgets/draggable.js");
 
 __webpack_require__(/*! jquery-ui/ui/widgets/droppable */ "./node_modules/jquery-ui/ui/widgets/droppable.js");
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -4983,12 +4985,14 @@ window.onload = function () {
     (0,_tasks_js__WEBPACK_IMPORTED_MODULE_1__.TaskEvent)();
   } else if (path === "/") {
     (0,_home_js__WEBPACK_IMPORTED_MODULE_0__.HomeEvent)();
+  } else if (path === "/mypage") {
+    (0,_tags_js__WEBPACK_IMPORTED_MODULE_2__.TagEvent)();
   }
 };
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_2__["default"].start();
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"].start();
 
 /***/ }),
 
@@ -5134,6 +5138,48 @@ function HomeEvent() {
       _iterator2.f();
     }
   }
+}
+
+/***/ }),
+
+/***/ "./resources/js/tags.js":
+/*!******************************!*\
+  !*** ./resources/js/tags.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TagEvent": () => (/* binding */ TagEvent)
+/* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+function TagEvent() {
+  $('.tag-plus').each(function (index, element) {
+    $(element).on('click', function () {
+      if ($('.tag-plus').length > 10) {
+        if ($('#tag-msg')) {
+          $('#tag-msg').remove();
+        }
+
+        $('.tag').before('<p class="text-red-500" id="tag-msg">タグは最大10個までです。<p>');
+        return false;
+      }
+
+      var hiddenTag = $('.hidden-tag').clone(true);
+      $('.tag').append(hiddenTag);
+      hiddenTag.removeClass('hidden hidden-tag');
+    });
+  });
+  $('.tag-minus').each(function (index, element) {
+    $(element).on('click', function () {
+      if ($('.tag-minus').length === 2) {
+        return false;
+      }
+
+      $(this).parent().parent().remove();
+    });
+  });
 }
 
 /***/ }),
@@ -5341,7 +5387,7 @@ function TaskEvent() {
           data.forEach(function (t) {
             var el = document.createElement('p');
             el.setAttribute('class', 'px-3 py-1 hover:underline cursor-pointer');
-            el.textContent = t['title'] + ':' + t['contents'];
+            el.textContent = t['title'];
             ti.appendChild(el);
           });
         } else {

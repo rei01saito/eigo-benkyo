@@ -38,6 +38,8 @@ Route::middleware(['auth'])->group(function() {
     Route::controller(UserController::class)->group(function() {
         Route::get('/mypage', 'index')->name('mypage');
         Route::get('/mypage/edit', 'edit')->name('mypage-edit');
+        Route::post('/mypage/tag/store', 'tagStore')->name('mypage-tag-store');
+        Route::post('/mypage/update', 'update')->name('mypage-store');
     });
 });
 
