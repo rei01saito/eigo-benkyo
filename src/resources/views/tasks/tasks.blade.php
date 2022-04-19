@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('tasks') }}
+    <x-breadcrumbs />
 @endsection
 
 @section('main')

@@ -1,13 +1,14 @@
 @extends('layouts.template')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('mypage') }}
+    <x-breadcrumbs />
 @endsection
 
 @section('main')
     <div class="pt-3 h-full">
         <div class="p-4 max-w-lg mx-auto bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
-            <form class="space-y-6" action="#">
+            <form class="space-y-6" action="/mypage/update" method="POST">
+                @csrf
                 <h5 class="text-xl font-medium text-gray-900 dark:text-white">自己情報</h5>
                 <div>
                     <label for="user_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">名前</label>

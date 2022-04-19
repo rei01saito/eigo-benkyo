@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('home') }}
+    <x-breadcrumbs />
 @endsection
 
 @section('main')
@@ -15,7 +15,7 @@
             </div>
             @auth
                 @isset ($tasks[0]->timer)
-                    <p id="timer-display" class="text-6xl absolute top-80" data-timer-amount="{{ $tasks[0]->timer * 60 }}">
+                    <p id="timer-display" class="text-6xl absolute top-72" data-timer-amount="{{ $tasks[0]->timer * 60 }}">
                         {{ $tasks[0]->timer }}:00
                     </p>
                 @else
