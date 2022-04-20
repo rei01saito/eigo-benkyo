@@ -18,8 +18,9 @@ class CreateTasksTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->unsignedInteger('priority');
             $table->string('title', 30);
-            $table->string('contents');
-            $table->date('deadline')->nullable();
+            $table->string('contents', 255)->nullable();
+            $table->unsignedInteger('n_exec')->nullable();
+            $table->unsignedInteger('timer');
             
             $table->timestamps();
         });

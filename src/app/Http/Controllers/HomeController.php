@@ -16,7 +16,8 @@ class HomeController extends Controller
 
     public function setTimer($id)
     {  
-        $tasks = Task::where('tasks_id', $id)->get();
+        $tasks = Task::where('user_id', Auth::id())
+            ->where('tasks_id', $id)->get();
         return response()->json(
             $tasks[0]
         );

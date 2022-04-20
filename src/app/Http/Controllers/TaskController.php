@@ -31,13 +31,12 @@ class TaskController extends Controller
         
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:30',
-            'contents' => 'required|max:255',
+            'contents' => 'max:255',
             'timer' => 'required|integer'
         ],
         [
             'title.required' => 'タイトルを入力して下さい。',
             'title.max' => 'タイトルは30文字以内で入力して下さい。',
-            'contents.required' => '内容を入力して下さい。',
             'contents.max' => '内容は255文字以内で入力して下さい。',
             'timer.required' => 'タイマーの値を入力して下さい。',
             'timer.integer' => 'タイマーの値には数字を入力して下さい。'
@@ -54,12 +53,33 @@ class TaskController extends Controller
 
     public function softDelete($id)
     {
-        Task::where('tasks_id', $id)->delete();
+        Task::where('user_id', Auth::id())
+            ->where('tasks_id', $id)->delete();
         return response()->json(
             [
                 'message' => '削除しました。'
             ]
         );
+    }
+
+    public function update(Request $request, $id)
+    {
+        $task = Task::where('user_id', Auth::id())
+            ->where('tasks_id', $id);
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:30',
+            'contents' => 'max:255',
+            'timer' => 'required|integer'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('tasks')->withErrors($validator);
+        }
+        $task->update([
+            'title' => $request->title,
+            'contents' => $request->contents,
+            'timer' => $request->timer
+        ]);
+        return redirect()->route('tasks');
     }
 
     public function trashcan()
@@ -83,12 +103,12 @@ class TaskController extends Controller
 
     public function forceDelete()
     {
-        $tasks = Task::onlyTrashed();
+        $tasks = Task::where('user_id', Auth::id())->onlyTrashed();
         $tasks->forceDelete();
         return redirect()->route('tasks')->with('msg', 'ゴミ箱の中身を削除しました。');
     }
 
-    public function update($id, $priority_id)
+    public function dragUpdate($id, $priority_id)
     {
         $task = Task::where('tasks_id', $id);
         $task->update(['priority' => $priority_id]);

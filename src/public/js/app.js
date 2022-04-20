@@ -5046,11 +5046,10 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function HomeEvent() {
-  var button = document.querySelector('#time-button');
   var timer = document.querySelectorAll('#setTimer');
   var timerDisplay = document.querySelector('#timer-display');
   var clickFlag = true;
-  button.addEventListener('click', function () {
+  $('#time-button').on('click', function () {
     var amount = timerDisplay.getAttribute('data-timer-amount');
 
     if (clickFlag && amount > 0) {
@@ -5072,8 +5071,7 @@ function HomeEvent() {
 
           var _finishIntervalId = setTimeout(function () {
             document.querySelector('#finish-icon').classList.add('hidden');
-          }, 5000); // のちにここに何回達成したかを更新する同期処理を追加
-
+          }, 5000);
 
           location.reload();
         }
@@ -5102,7 +5100,7 @@ function HomeEvent() {
     }
 
     clickFlag = false;
-  }, false);
+  });
 
   if (timer.length) {
     var _iterator2 = _createForOfIteratorHelper(timer),
@@ -5174,6 +5172,10 @@ function TagEvent() {
   $('.tag-minus').each(function (index, element) {
     $(element).on('click', function () {
       if ($('.tag-minus').length === 2) {
+        if (confirm('削除してもよろしいですか？')) {
+          location.href = "/mypage/tag/delete";
+        }
+
         return false;
       }
 
@@ -5254,19 +5256,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskFormValidate.js */ "./resources/js/taskFormValidate.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 
 function TaskEvent() {
-  // Task
-  var tasks = document.querySelectorAll('.task');
-  var trashcan = document.querySelector('.fa-trash-can');
-  var takeBack = document.querySelector('#take-back');
-  var exhaust = document.querySelector('#exhaust');
   $('.task').draggable({
     revert: true,
     revertDuration: 0
@@ -5323,89 +5314,89 @@ function TaskEvent() {
     }
   });
 
-  if (tasks.length || trashcan || takeBack || exhaust) {
-    var _iterator = _createForOfIteratorHelper(tasks),
-        _step;
+  if ($('.task').length) {
+    $('.task').each(function (index, element) {
+      $(element).on('click', function () {
+        $(this).find('.task-contents').toggleClass('hidden');
+        $(this).find('.task-timer').toggleClass('hidden');
+      });
+      $(element).on('dblclick', function () {
+        var _this = this;
 
-    try {
-      var _loop = function _loop() {
-        var task = _step.value;
-        task.addEventListener('click', function (event) {
-          var taskContents = event.currentTarget.querySelector('.task-contents');
-          taskContents.classList.toggle('hidden');
-        });
-        task.addEventListener('dblclick', function (event) {
-          var taskId = event.currentTarget.getAttribute('data-taskId');
+        var taskId = $(this).data('taskid');
 
-          if (confirm('削除しますか？')) {
-            var loadIcon = document.querySelector('.load-icon');
-            loadIcon.classList.remove('hidden');
-            task.before(loadIcon);
-            task.classList.add('hidden');
-            var url = '/tasks/softDelete/' + taskId;
-            fetch(url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-            }).then(function (response) {
-              return response.json();
-            }).then(function (data) {
-              console.log('success!');
-              loadIcon.classList.add('hidden');
-              task.remove();
-            })["catch"](function (err) {
-              console.log('fail');
-              loadIcon.classList.add('hidden');
-              task.classList.remove('hidden');
-            });
-          }
-        });
-      };
-
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        _loop();
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    trashcan.addEventListener('click', function () {
-      var loadIcon = document.querySelector('.load-icon');
-      loadIcon.classList.remove('hidden');
-      document.querySelector('.trashed-index').appendChild(loadIcon);
-      fetch('/tasks/trashcan', {}).then(function (response) {
-        return response.json();
-      }).then(function (data) {
-        var ti = document.querySelector('.trashed-index');
-        ti.innerHTML = '';
-
-        if (data.length) {
-          data.forEach(function (t) {
-            var el = document.createElement('p');
-            el.setAttribute('class', 'px-3 py-1 hover:underline cursor-pointer');
-            el.textContent = t['title'];
-            ti.appendChild(el);
+        if (confirm('削除しますか？')) {
+          $(this).before($('.load-icon'));
+          $(this).addClass('hidden');
+          $('.load-icon').removeClass('hidden');
+          var url = '/tasks/softDelete/' + taskId;
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          }).then(function (response) {
+            return response.json();
+          }).then(function (data) {
+            console.log('success!');
+            $('.load-icon').addClass('hidden');
+            $(_this).remove();
+          })["catch"](function (err) {
+            console.log('fail');
+            $('.load-icon').addClass('hidden');
+            $(_this).removeClass('hidden');
           });
-        } else {
-          ti.innerHTML = 'ゴミ箱は空です。';
         }
       });
     });
-    takeBack.addEventListener('click', function () {
-      location.href = "/tasks/restore";
-    });
-    exhaust.addEventListener('click', function () {
-      location.href = "/tasks/forceDelete";
-    });
   }
 
+  $('.edit-task').each(function (index, element) {
+    $(element).on('click', function () {
+      // あらかじめタスクたちにはdata属性を持たせておき、ここで挿入する
+      $('#edit-form').find('input[name="title"]').val($(this).data('task-title'));
+      $('#edit-form').find('input[name="contents"]').val($(this).data('task-contents'));
+      $('#edit-form').find('input[name="timer"]').val($(this).data('task-timer'));
+      $('#edit-form').find('input[name="priority"]').val($(this).closest('.task-index').data('priority-id'));
+      $('#edit-form').find('input[name="tasks_id"]').val($(this).data('tasks-id'));
+      var url = '/tasks/' + $(this).data('tasks-id');
+      $('#edit-form').attr('action', url);
+    });
+    $(element).closest('button').on('click', function (e) {
+      e.stopPropagation();
+    });
+  });
+  $('.fa-trash-can').on('click', function () {
+    $('.trashed-index').append($('.load-icon'));
+    $('.load-icon').removeClass('hidden');
+    fetch('/tasks/trashcan', {}).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      $('.trashed-index').html('');
+
+      if (data.length) {
+        data.forEach(function (t) {
+          var el = $('<p></p>');
+          el.attr('class', 'px-3 py-1 hover:underline cursor-pointer');
+          el.text(t['title']);
+          $('.trashed-index').append(el);
+        });
+      } else {
+        $('.trashed-index').text('ゴミ箱は空です。');
+      }
+    });
+  });
+  $('#take-back').on('click', function () {
+    location.href = "/tasks/restore";
+  });
+  $('#exhaust').on('click', function () {
+    location.href = "/tasks/forceDelete";
+  });
   (0,_taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__.TaskFormValidate)($('#add-thinking'));
   (0,_taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__.TaskFormValidate)($('#add-doing'));
   (0,_taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__.TaskFormValidate)($('#add-done'));
+  (0,_taskFormValidate_js__WEBPACK_IMPORTED_MODULE_0__.TaskFormValidate)($('#edit-form'));
 }
 
 /***/ }),

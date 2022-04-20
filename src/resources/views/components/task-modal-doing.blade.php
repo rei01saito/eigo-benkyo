@@ -13,13 +13,16 @@
             <form  id="add-doing" class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="/tasks/store" method="post">
                 @csrf
                 
+                <p class="font-semibold">実行中のタスク</p>
                 <div>
-                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">taskのタイトル</label>
-                    <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="タイトル名">
-                    <textarea name="contents" id="title" class="h-28 mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="タスク内容"></textarea>
+                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">タスク名:</label>
+                    <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="タスク名" maxlength="30">
                     
-                    <label for="timer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 pt-4">タイマー時間（分）</label>
-                    <input type="text" name="timer" id="timer" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="分で入力">
+                    <label for="contents" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 pt-4">タスク内容:</label>
+                    <textarea name="contents" id="contents" class="h-28 mt-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="タスク内容" maxlength="255"></textarea>
+                    
+                    <label for="timer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 pt-4">タイマー時間（分）:</label>
+                    <input type="text" name="timer" id="timer" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="分で入力" maxlength="4">
                     <input type="hidden" name="priority" value="1">
                 </div>
                 

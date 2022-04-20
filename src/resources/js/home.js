@@ -1,11 +1,10 @@
 export function HomeEvent() {
 
-  const button = document.querySelector('#time-button');
   const timer = document.querySelectorAll('#setTimer');
   const timerDisplay = document.querySelector('#timer-display');
   let clickFlag = true;
 
-  button.addEventListener('click', function() {
+  $('#time-button').on('click', function() {
     let amount = timerDisplay.getAttribute('data-timer-amount');
     if (clickFlag && (amount > 0)) {
       let now = new Date();
@@ -26,7 +25,6 @@ export function HomeEvent() {
             document.querySelector('#finish-icon').classList.add('hidden');
           }, 5000)
 
-          // のちにここに何回達成したかを更新する同期処理を追加
           location.reload();
         }
 
@@ -45,7 +43,7 @@ export function HomeEvent() {
     }
 
       clickFlag = false;
-  }, false);
+  });
 
   if (timer.length) {
     for (let t of timer) {

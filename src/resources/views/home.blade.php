@@ -19,14 +19,14 @@
                         {{ $tasks[0]->timer }}:00
                     </p>
                 @else
-                    <p id="timer-display" class="text-6xl absolute top-80" data-timer-amount="0">
+                    <p id="timer-display" class="text-6xl absolute top-72" data-timer-amount="0">
                         タスクが登録されていません
                     </p>
                 @endisset
             @endauth
 
             @guest
-                <p id="timer-display" class="text-6xl absolute top-80" data-timer-amount="3600">
+                <p id="timer-display" class="text-6xl absolute top-72" data-timer-amount="3600">
                     60:00 (仮)
                 </p>
             @endguest

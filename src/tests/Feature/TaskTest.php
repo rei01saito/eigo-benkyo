@@ -42,11 +42,72 @@ class TaskTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_request_to_store()
+    {
+        $response = $this->post('/tasks/store', [
+            'title' => 'Is this success?',
+            'contents' => 'This is a test.',
+            'timer' => 50,
+            'priority' => rand(0, 2)
+        ]);
+        $response->assertRedirect('/tasks');
+        $this->assertDatabaseHas('tasks',[
+            'title' => 'Is this success?',
+            'contents' => 'This is a test.'
+        ]);
+    }
+
+    public function test_validate_to_store()
+    {
+        $response = $this->post('/tasks/store', [
+            'title' => '',
+            'contents' => '123456789' * 25 + '123456',
+            'timer' => '',
+            'priority' => rand(0, 2)
+        ]);
+        $response->assertRedirect('/tasks');
+        $this->assertDatabaseMissing('tasks',[
+            'title' => '',
+            'contents' => '123456789' * 25 + '123456',
+            'timer' => '',
+        ]);
+    }
+
     public function test_request_to_softDelete()
     {
         $response = $this->post('/tasks/softDelete/'.$this->tasks_id);
         $response->assertJson([
             'message' => '削除しました。'
+        ]);
+    }
+
+    public function test_request_to_update()
+    {
+        $response = $this->post('/tasks'.'/'.$this->tasks_id, [
+            'title' => 'This title is changed',
+            'contents' => 'This contents is changed',
+            'timer' => 140
+        ]);
+        $response->assertRedirect('/tasks');
+        $this->assertDatabaseHas('tasks',[
+            'title' => 'This title is changed',
+            'contents' => 'This contents is changed',
+            'timer' => 140
+        ]);
+    }
+
+    public function test_validate_to_update()
+    {
+        $response = $this->post('/tasks'.'/'.$this->tasks_id, [
+            'title' => '',
+            'contents' => '123456789' * 25 + '123456',
+            'timer' => 'あいうえお'
+        ]);
+        $response->assertRedirect('/tasks');
+        $this->assertDatabaseMissing('tasks',[
+            'title' => '',
+            'contents' => '123456789' * 25 + '123456',
+            'timer' => 'あいうえお'
         ]);
     }
 
@@ -92,7 +153,7 @@ class TaskTest extends TestCase
         }
     }
 
-    public function test_request_to_update()
+    public function test_request_to_drag_update()
     {
         // 現在のpriority値
         $p = '';
@@ -118,20 +179,6 @@ class TaskTest extends TestCase
         // 更新の前と後で値が変わっていたらtrue
         $bool = $p <> $updated_p;
         $this->assertTrue($bool);
-    }
-
-    public function test_request_to_store()
-    {
-        $response = $this->post('/tasks/store', [
-            'title' => 'Is this success?',
-            'contents' => 'This is a test.',
-            'priority' => rand(0, 2)
-        ]);
-        $response->assertRedirect('/tasks');
-        $this->assertDatabaseHas('tasks',[
-            'title' => 'Is this success?',
-            'contents' => 'This is a test.'
-        ]);
     }
 
 }
