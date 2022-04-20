@@ -56,6 +56,7 @@
                                             </button>
                                         </div>
                                         <p class="hidden whitespace-pre-wrap task-contents text-sm mx-3 my-1 p-1">{{ $item->contents }}</p>
+                                        <p class="hidden whitespace-pre-wrap text-xs task-timer text-right text-gray-400 mx-3 my-1 p-1">({{ $item->timer }}分)</p>
                                     </div>    
                                 </div>
                             @endforeach
@@ -79,6 +80,7 @@
                                             </button>
                                         </div>
                                         <p class="hidden whitespace-pre-wrap task-contents text-sm mx-3 my-1 p-1">{{ $item->contents }}</p>
+                                        <p class="hidden whitespace-pre-wrap text-xs task-timer text-right text-gray-400 mx-3 my-1 p-1">({{ $item->timer }}分)</p>
                                     </div>    
                                 </div>
                             @endforeach
