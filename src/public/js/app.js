@@ -5046,11 +5046,29 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function HomeEvent() {
+  // ログイン前
+  $('#intro').fadeIn(1000); // ログイン後
+
   var timer = document.querySelectorAll('#setTimer');
   var timerDisplay = document.querySelector('#timer-display');
   var clickFlag = true;
-  $('#time-button').on('click', function () {
+  var stopFlag = false;
+  var i_amount = 0;
+  $('#start-button').on('click', function () {
     var amount = timerDisplay.getAttribute('data-timer-amount');
+
+    if (amount == 0) {
+      return false;
+    }
+
+    $(this).addClass('hidden');
+    $('#stop-button').removeClass('hidden');
+
+    if (!stopFlag) {
+      // amount初期値
+      i_amount = timerDisplay.getAttribute('data-timer-amount');
+    } // console.log(i_amount)
+
 
     if (clickFlag && amount > 0) {
       var now = new Date();
@@ -5058,21 +5076,20 @@ function HomeEvent() {
       var time = end.getTime(); // 残りtimestamp
 
       var intervalId = setInterval(function () {
+        amount = timerDisplay.getAttribute('data-timer-amount');
         time -= 1000;
         var remain = time - now.getTime();
-        timerDisplay.setAttribute('data-timer-amount', remain);
+        timerDisplay.setAttribute('data-timer-amount', remain / 1000);
         var hour = Math.floor(remain / (60 * 1000));
         var min = Math.floor(remain % (60 * 1000) / 1000);
         timerDisplay.textContent = hour + ':' + ('0' + min).slice(-2);
 
         if (remain < 1) {
           clearInterval(intervalId);
-          document.querySelector('#finish-icon').classList.remove('hidden');
-
-          var _finishIntervalId = setTimeout(function () {
-            document.querySelector('#finish-icon').classList.add('hidden');
+          $('#finish-icon').removeClass('hidden');
+          var finishIntervalId = setTimeout(function () {
+            $('#finish-icon').addClass('hidden');
           }, 5000);
-
           location.reload();
         }
 
@@ -5084,19 +5101,34 @@ function HomeEvent() {
             var t = _step.value;
             t.addEventListener('click', function () {
               clearInterval(intervalId);
-              clearInterval(finishIntervalId);
+              $('#spin').css('transform', 'rotate(0deg)');
+              $('#stop-button').addClass('hidden');
+              $('#start-button').removeClass('hidden');
+              clickFlag = true;
+              stopFlag = false;
             });
-          }
+          } // console.log('i_amount: '+i_amount)
+          // console.log('amount: '+amount)
+          // console.log('remain: '+remain)
+
         } catch (err) {
           _iterator.e(err);
         } finally {
           _iterator.f();
         }
 
-        var deg = (1 - remain / amount / 1000) * 360;
+        var deg = (1 - remain / (i_amount * 1000)) * 360;
         console.log(deg);
         $('#spin').css('transform', 'rotate(' + deg + 'deg)');
       }, 1000);
+      $('#stop-button').on('click', function () {
+        clearInterval(intervalId);
+        $(this).addClass('hidden');
+        $('#start-button').removeClass('hidden');
+        clickFlag = true;
+        stopFlag = true;
+        var stopNow = new Date();
+      });
     }
 
     clickFlag = false;
@@ -5258,7 +5290,11 @@ __webpack_require__.r(__webpack_exports__);
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 function TaskEvent() {
+  var task_index = '';
   $('.task').draggable({
+    drag: function drag(event, ui) {
+      task_index = $(this).closest('.task-index').data('priority-id');
+    },
     revert: true,
     revertDuration: 0
   });
@@ -5299,7 +5335,12 @@ function TaskEvent() {
       var el = $(this).find('.task-index');
       $(dragEl).appendTo(el); // 非同期でpriorityを変更
 
-      var priorityId = el.data('priority-id');
+      var priorityId = el.data('priority-id'); // 同じpriorityの範囲内なら通信しない
+
+      if (task_index === priorityId) {
+        return false;
+      }
+
       var taskId = dragEl.getAttribute('data-taskId');
       var url = '/tasks/update/' + taskId + '/' + priorityId;
       fetch(url, {
@@ -5356,7 +5397,7 @@ function TaskEvent() {
     $(element).on('click', function () {
       // あらかじめタスクたちにはdata属性を持たせておき、ここで挿入する
       $('#edit-form').find('input[name="title"]').val($(this).data('task-title'));
-      $('#edit-form').find('input[name="contents"]').val($(this).data('task-contents'));
+      $('#edit-form').find('textarea[name="contents"]').val($(this).data('task-contents'));
       $('#edit-form').find('input[name="timer"]').val($(this).data('task-timer'));
       $('#edit-form').find('input[name="priority"]').val($(this).closest('.task-index').data('priority-id'));
       $('#edit-form').find('input[name="tasks_id"]').val($(this).data('tasks-id'));

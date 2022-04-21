@@ -21,6 +21,9 @@ class TagController extends Controller
                 'tag' => 'required|array',
                 'tag.*' => 'max:30'
             ]);
+            if (count($request->input('tag')) > 10) {
+                throw new \Exception('tagは10個までしか登録できません。');
+            }
             $request->collect('tag')->each(function($t) {
                 Tag::create([
                     'tags_name' => $t,

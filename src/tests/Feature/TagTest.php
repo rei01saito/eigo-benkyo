@@ -44,6 +44,19 @@ class TagTest extends TestCase
         }
     }
 
+    public function test_validate_to_count_tagStore()
+    {
+        $tags = [];
+        for ($i = 0; $i < 11; $i++) {
+            array_push($tags, 'tagTest_'.$i);
+        }
+        $response = $this->post('/mypage/tag/store', [
+            'tag' => $tags
+        ]);
+        $response->assertRedirect('/mypage');
+        $this->assertDatabaseCount('tags', 0);
+    }
+
     public function test_validate_to_tagStore()
     {
         $array = [

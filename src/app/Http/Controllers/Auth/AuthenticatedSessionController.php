@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -33,6 +34,24 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * ゲストログイン用に追加
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function guestLogin()
+    {
+        $array = [
+            'email' => config('guestInfo.email'),
+            'password' => config('guestInfo.password')
+        ];
+        if (Auth::attempt($array)) {
+            return redirect()->route('home');
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
