@@ -1,28 +1,51 @@
 export function HomeEvent() {
 
+  // ログイン前
+  $('#intro').fadeIn(1000);
+
+  // ログイン後
   const timer = document.querySelectorAll('#setTimer');
   const timerDisplay = document.querySelector('#timer-display');
   let clickFlag = true;
-
-  $('#time-button').on('click', function() {
+  let stopFlag = false;
+  let i_amount = 0;
+  
+  $('#start-button').on('click', function() {
     let amount = timerDisplay.getAttribute('data-timer-amount');
+    if (amount == 0) {
+      return false;
+    }
+    $(this).addClass('hidden');
+    $('#stop-button').removeClass('hidden');
+    
+    if (!stopFlag) {
+      // amount初期値
+      i_amount = timerDisplay.getAttribute('data-timer-amount');
+    }
+    // console.log(i_amount)
+
     if (clickFlag && (amount > 0)) {
+      
       let now = new Date();
       let end = new Date(now.getTime() + amount * 1000);
       let time = end.getTime() // 残りtimestamp
       
       let intervalId = setInterval(function() {
+        amount = timerDisplay.getAttribute('data-timer-amount');
+
         time -= 1000;
+        
         let remain = time - now.getTime();
-        timerDisplay.setAttribute('data-timer-amount', remain);
+        timerDisplay.setAttribute('data-timer-amount', remain / 1000);
         let hour = Math.floor(remain / (60 * 1000));
         let min = Math.floor((remain % (60 * 1000)) / 1000);
         timerDisplay.textContent = hour + ':' + ('0' + min).slice(-2);
+
         if (remain < 1) {
           clearInterval(intervalId);
-          document.querySelector('#finish-icon').classList.remove('hidden');
+          $('#finish-icon').removeClass('hidden');
           let finishIntervalId = setTimeout(function() {
-            document.querySelector('#finish-icon').classList.add('hidden');
+            $('#finish-icon').addClass('hidden');
           }, 5000)
 
           location.reload();
@@ -31,15 +54,31 @@ export function HomeEvent() {
         for (let t of timer) {
           t.addEventListener('click', () => {
               clearInterval(intervalId);
-              clearInterval(finishIntervalId);
+              $('#spin').css('transform', 'rotate(0deg)');
+              $('#stop-button').addClass('hidden');
+              $('#start-button').removeClass('hidden');
+              clickFlag = true;
+              stopFlag = false;
           })
         }
+
+        // console.log('i_amount: '+i_amount)
+        // console.log('amount: '+amount)
+        // console.log('remain: '+remain)
         
-        let deg = (1 - ( remain / amount / 1000 )) * 360;
+        let deg = (1 - ( (remain) / (i_amount * 1000))) * 360;
         console.log(deg)
         $('#spin').css('transform', 'rotate(' + deg + 'deg)');
-
       }, 1000);
+
+      $('#stop-button').on('click', function() {
+        clearInterval(intervalId);
+        $(this).addClass('hidden');
+        $('#start-button').removeClass('hidden');
+        clickFlag = true;
+        stopFlag = true;
+        let stopNow = new Date();
+      });
     }
 
       clickFlag = false;

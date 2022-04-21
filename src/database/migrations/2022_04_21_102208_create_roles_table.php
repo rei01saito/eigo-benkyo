@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTasksStatusesTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTasksStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks_statuses', function (Blueprint $table) {
-            $table->unsignedInteger('tasks_statuses_id');
-            $table->string('status');
+        Schema::create('roles', function (Blueprint $table) {
+            $table->unsignedInteger('roles_id');
+            $table->string('roles_name', 20);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateTasksStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks_statuses');
+        Schema::dropIfExists('roles');
     }
 }

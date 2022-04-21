@@ -1,7 +1,11 @@
 import { TaskFormValidate } from "./taskFormValidate.js";
 export function TaskEvent(){
-
+  
+  let task_index = '';
   $('.task').draggable({
+    drag: function(event, ui) {
+      task_index = $(this).closest('.task-index').data('priority-id');
+    },
     revert: true,
     revertDuration: 0
   });
@@ -42,6 +46,12 @@ export function TaskEvent(){
 
       // 非同期でpriorityを変更
       let priorityId = el.data('priority-id');
+
+      // 同じpriorityの範囲内なら通信しない
+      if (task_index === priorityId) {
+        return false;
+      }
+
       let taskId = dragEl.getAttribute('data-taskId');
       let url = '/tasks/update/' + taskId + '/' + priorityId;
       fetch(url, {
@@ -96,7 +106,7 @@ export function TaskEvent(){
     $(element).on('click', function(){
       // あらかじめタスクたちにはdata属性を持たせておき、ここで挿入する
       $('#edit-form').find('input[name="title"]').val($(this).data('task-title'));
-      $('#edit-form').find('input[name="contents"]').val($(this).data('task-contents'));
+      $('#edit-form').find('textarea[name="contents"]').val($(this).data('task-contents'));
       $('#edit-form').find('input[name="timer"]').val($(this).data('task-timer'));
       $('#edit-form').find('input[name="priority"]').val($(this).closest('.task-index').data('priority-id'));
       $('#edit-form').find('input[name="tasks_id"]').val($(this).data('tasks-id'));
