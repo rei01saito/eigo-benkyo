@@ -5090,7 +5090,8 @@ function HomeEvent() {
           var finishIntervalId = setTimeout(function () {
             $('#finish-icon').addClass('hidden');
           }, 5000);
-          location.reload();
+          var url = '/home/incrementNExec/' + $('#n-exec-increment').data('tasks-id-increment');
+          location.href = url;
         }
 
         var _iterator = _createForOfIteratorHelper(timer),
@@ -5148,15 +5149,10 @@ function HomeEvent() {
           fetch(url, {}).then(function (response) {
             return response.json();
           }).then(function (data) {
-            if (data["timer"]) {
-              timerDisplay.textContent = data["timer"] + ':00';
-              timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
-            } else {
-              timerDisplay.textContent = '60:00';
-              timerDisplay.setAttribute('data-timer-amount', '1800');
-            }
-
+            timerDisplay.textContent = data["timer"] + ':00';
+            timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
             $('#task-title').text(data["title"]);
+            $('#n-exec-increment').attr('data-tasks-id-increment', task_id);
           })["catch"](function (err) {
             alert('通信に失敗しました。');
           });
@@ -5188,17 +5184,18 @@ function TagEvent() {
   $('.tag-plus').each(function (index, element) {
     $(element).on('click', function () {
       if ($('.tag-plus').length > 10) {
-        if ($('#tag-msg')) {
-          $('#tag-msg').remove();
+        if ($('.tag-msg')) {
+          $('.tag-msg').remove();
         }
 
-        $('.tag').before('<p class="text-red-500" id="tag-msg">タグは最大10個までです。<p>');
+        $('.tag').before('<p class="text-sm text-red-500 tag-msg">タグは最大10個までです。</p>');
         return false;
       }
 
       var hiddenTag = $('.hidden-tag').clone(true);
       $('.tag').append(hiddenTag);
       hiddenTag.removeClass('hidden hidden-tag');
+      hiddenTag.find('input[name="tag[]"]').addClass('tag-items');
     });
   });
   $('.tag-minus').each(function (index, element) {
@@ -5213,6 +5210,28 @@ function TagEvent() {
 
       $(this).parent().parent().remove();
     });
+  });
+  $('#tag-submit').on('click', function (e) {
+    e.preventDefault();
+    var flag = true;
+    $('.tag-items').each(function (index, element) {
+      if (!$(element).val()) {
+        if ($('.tag-msg')) {
+          $('.tag-msg').remove();
+          $('.tag').before('<p class="text-sm text-red-500 tag-msg">タグを入力して下さい。</p>');
+        } else {
+          $('.tag').before('<p class="text-sm text-red-500 tag-msg">タグを入力して下さい。</p>');
+        }
+
+        flag = false;
+      }
+    });
+
+    if (flag) {
+      $('#tag-form').submit();
+    }
+
+    return false;
   });
 }
 
@@ -5241,16 +5260,16 @@ function TaskFormValidate(element) {
     // タイトル
 
     if (!form.find('input[name="title"]').val()) {
-      form.find('input[name="title"]').after('<p class="err-msg text-red-500">タイトルを入力して下さい</p>');
+      form.find('input[name="title"]').after('<p class="err-msg text-sm text-red-600">タイトルを入力して下さい</p>');
       flag = false;
     } else if (form.find('input[name="title"]').val().length > 30) {
-      form.find('input[name="title"]').after('<p class="err-msg text-red-500">タイトルは30文字以内で入力して下さい</p>');
+      form.find('input[name="title"]').after('<p class="err-msg text-sm text-red-600">タイトルは30文字以内で入力して下さい</p>');
       flag = false;
     } // 内容
 
 
-    if (form.find('textarea[name="contents"]').val().length > 255) {
-      form.find('textarea[name="contents"]').after('<p class="err-msg text-red-500">内容は255文字以内で入力して下さい</p>');
+    if (form.find('textarea[name="contents"]').val().length > 2000) {
+      form.find('textarea[name="contents"]').after('<p class="err-msg text-sm text-red-600">内容は2000文字以内で入力して下さい</p>');
       flag = false;
     } // タイマー
 
@@ -5258,10 +5277,10 @@ function TaskFormValidate(element) {
     var pattern = /^([1-9]\d*|0)$/;
 
     if (!form.find('input[name="timer"]').val()) {
-      form.find('input[name="timer"]').after('<p class="err-msg text-red-500">タイマー時間を入力して下さい</p>');
+      form.find('input[name="timer"]').after('<p class="err-msg text-sm text-red-600">タイマー時間を入力して下さい</p>');
       flag = false;
     } else if (!pattern.test(form.find('input[name="timer"]').val()) || form.find('input[name="timer"]').val() < 1) {
-      form.find('input[name="timer"]').after('<p class="err-msg text-red-500">タイマー時間には0以上の数字を入力して下さい</p>');
+      form.find('input[name="timer"]').after('<p class="err-msg text-sm text-red-600">タイマー時間には1以上の数字を入力して下さい</p>');
       flag = false;
     }
 

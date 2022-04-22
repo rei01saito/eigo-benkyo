@@ -4,18 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Task extends Model
+class TargetsType extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $fillable = [
-        'priority',
+        'targets_id',
         'title',
         'contents',
-        'timer',
-        'targets_id'
+        'accomplished'
     ];
+
+    protected $primaryKey = 'targets_types_id';
 }

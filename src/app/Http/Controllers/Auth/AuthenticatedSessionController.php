@@ -44,8 +44,8 @@ class AuthenticatedSessionController extends Controller
     public function guestLogin()
     {
         $array = [
-            'email' => config('guestInfo.email'),
-            'password' => config('guestInfo.password')
+            'email' => 'guest@email.com',
+            'password' => 'password1234'
         ];
         if (Auth::attempt($array)) {
             return redirect()->route('home');

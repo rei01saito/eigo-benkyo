@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Target;
+use App\Models\TargetsType;
 
 class GuestSeeder extends Seeder
 {
@@ -17,13 +19,35 @@ class GuestSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name' => config('guestInfo.name'),
-            'email' => config('guestInfo.email'),
-            'password' => Hash::make(config('guestInfo.password')),
+            'name' => 'guest',
+            'email' => 'guest@email.com',
+            'password' => Hash::make('password1234'),
             'role' => 1
         ]);
-        Target::create([
-            'users_id' => $user->id
-        ]);
+        
+        Target::upsert([
+            ['users_id' => $user->id, 'type' => 0],
+            ['users_id' => $user->id, 'type' => 1],
+            ['users_id' => $user->id, 'type' => 1],
+            ['users_id' => $user->id, 'type' => 1],
+            ['users_id' => $user->id, 'type' => 1],
+        ], ['targets_id']);
+        
+        $targets = Target::where('users_id', $user->id)
+            ->where('type', 1)->get();
+        $array = [
+            '今日の目標',
+            '今週の目標',
+            '今月の目標',
+            '今年の目標'
+        ];
+        $i = 0;
+        foreach ($targets as $t) {
+            TargetsType::create([
+                'targets_id' => $t->targets_id,
+                'title' => $array[$i]
+            ]);
+            $i++;
+        }
     }
 }

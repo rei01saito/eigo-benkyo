@@ -19,8 +19,8 @@ class CreateTargetsTable extends Migration
                 ->constrained('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('title')->default('default');
-            $table->string('contents', 255)->nullable();
+            $table->unsignedInteger('type')->default(0);
+            
             $table->timestamps();
         });
     }

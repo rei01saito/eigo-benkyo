@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePrioritiesTable extends Migration
+class AddSoftdeleteToTargets extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreatePrioritiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('priorities', function (Blueprint $table) {
-            $table->unsignedBigInteger('priorities_id');
-            $table->primary('priorities_id');
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('targets', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +25,8 @@ class CreatePrioritiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('priorities');
+        Schema::table('targets', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

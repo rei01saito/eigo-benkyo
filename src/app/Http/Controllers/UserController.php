@@ -48,7 +48,7 @@ class UserController extends Controller
             'password' => 'パスワードを入力して下さい。'
         ]);
         if ($validator->fails()) {
-            return redirect()->route('mypage-edit')->withError($validator);
+            return redirect()->route('mypage-edit')->withErrors($validator);
         }
 
         $user = User::find(Auth::id());
@@ -59,5 +59,16 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('mypage');
+    }
+
+    public function destroy(Request $request)
+    {
+        $id = Auth::id();
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        User::find($id)->delete();
+        return redirect('/'); 
     }
 }
