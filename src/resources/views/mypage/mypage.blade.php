@@ -28,7 +28,6 @@
                 <x-tag-modal :tags="$tags">タグを編集する</x-tag-modal>
                 <x-button onclick="location.href='/mypage/edit'">自己情報を編集する</x-button>
             </div>
-
         </div>
 
     </div>

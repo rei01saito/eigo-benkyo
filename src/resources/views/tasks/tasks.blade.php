@@ -5,7 +5,7 @@
 @endsection
 
 @section('main')
-    <div class="h-screen">
+    <div class="">
         <!-- Trash can -->
         <x-task-trashcan />
 
@@ -15,12 +15,12 @@
         @endif
 
         <!-- tasks -->
-        <div class="text-center pt-6 pb-1">ダブルクリックで削除!</div>
+        <div class="font-body text-center pt-6 pb-1">ダブルクリックで削除!</div>
         <div class="flex h-3/5">
             <div class="px-1 w-full task-card">
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
-                        <p class="text-2xl text-center pb-3"><i class="fa-solid fa-file-pen"></i>検討中のタスク</p>
+                        <p class="font-body text-2xl text-center pb-3"><i class="fa-solid fa-file-pen"></i>検討中のタスク</p>
                         <div class="task-index" data-priority-id='0'>
                             @foreach ($thinking as $item)
                                 <div class="task" data-taskId="{{$item->tasks_id}}">
@@ -44,7 +44,7 @@
             <div class="px-1 w-full task-card">
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
-                        <p class="text-2xl text-center pb-3"><i class="fa-regular fa-circle-dot"></i>実行中のタスク</p>
+                        <p class="font-body text-2xl text-center pb-3"><i class="fa-regular fa-circle-dot"></i>実行中のタスク</p>
                         <div class="task-index" data-priority-id='1'>
                             @foreach ($doing as $item)
                                 <div class="task" data-taskId="{{$item->tasks_id}}">
@@ -68,7 +68,7 @@
             <div class="px-1 w-full task-card">
                 <div class="border rounded-lg bg-white shadow-md">
                     <div class="py-4">
-                        <p class="text-2xl text-center pb-3"><i class="fa-solid fa-check"></i>完了したタスク</p>
+                        <p class="font-body text-2xl text-center pb-3"><i class="fa-solid fa-check"></i>完了したタスク</p>
                         <div class="task-index" data-priority-id='2'>
                             @foreach ($done as $item)
                                 <div class="task" data-taskId="{{$item->tasks_id}}">

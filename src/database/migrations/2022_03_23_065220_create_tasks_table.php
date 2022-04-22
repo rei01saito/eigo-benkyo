@@ -15,21 +15,25 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('tasks_id');
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->unsignedInteger('priority');
-            $table->foreign('priority')
-                ->references('priorities_id')
-                ->on('priorities')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+            $table->unsignedBigInteger('targets_id');
+            $table->unsignedBigInteger('priority');
             $table->string('title', 30);
-            $table->string('contents', 255)->nullable();
+            $table->string('contents', 2000)->nullable();
             $table->unsignedInteger('n_exec')->nullable();
             $table->unsignedInteger('timer');
             
+            
+            $table->foreign('targets_id')
+            ->references('targets_id')
+            ->on('targets')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreign('priority')
+            ->references('priorities_id')
+            ->on('priorities')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

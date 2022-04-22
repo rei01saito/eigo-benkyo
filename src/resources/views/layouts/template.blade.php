@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
 </head>
 <body class="h-screen bg-slate-100">
-    <header class="border px-12 py-2 bg-blue-200 shadow fixed w-full">
+    <header class="border sm:px-12 py-2 bg-blue-200 shadow fixed w-full z-50">
         <nav class="flex items-center justify-between px-7">
             <p class="text-4xl px-4 font-bold font-body"><a href="/">Katask</a></p>
             <ul class="flex">
@@ -19,6 +19,7 @@
                     @can('admin')
                         <li class="px-4 font-body"><a href="/dashboard">Dashboard</a></li>
                     @endcan
+                    <li class="pr-4 font-body"><a href="/targets">目標</a></li>
                     <li class="pr-4 font-body"><a href="/tasks">タスク</a></li>
                     <li class="font-body"><a href="/mypage ">マイページ</a></li>
                     <!-- Settings Dropdown -->
@@ -69,7 +70,7 @@
         </div>
     </div>
     
-    <main class="h-full bg-slate-100">
+    <main class="bg-slate-100">
         <div class="container mx-auto">
             @auth
                 @yield('main')
@@ -81,7 +82,7 @@
         </div>
     </main>
 
-    <footer>
+    <footer id="footer">
         <x-footer />
     </footer>
 

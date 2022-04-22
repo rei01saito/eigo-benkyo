@@ -48,7 +48,8 @@ export function HomeEvent() {
             $('#finish-icon').addClass('hidden');
           }, 5000)
 
-          location.reload();
+          let url = '/home/incrementNExec/' + $('#n-exec-increment').data('tasks-id-increment');
+          location.href = url;
         }
 
         for (let t of timer) {
@@ -96,14 +97,10 @@ export function HomeEvent() {
         })
         .then(response => response.json())
         .then(data => {
-          if (data["timer"]) {
-            timerDisplay.textContent = data["timer"] + ':00';
-            timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
-          } else {
-            timerDisplay.textContent = '60:00'
-            timerDisplay.setAttribute('data-timer-amount', '1800');
-          }
+          timerDisplay.textContent = data["timer"] + ':00';
+          timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
           $('#task-title').text(data["title"]);
+          $('#n-exec-increment').attr('data-tasks-id-increment', task_id);
         })
         .catch(err => {
           alert('通信に失敗しました。')

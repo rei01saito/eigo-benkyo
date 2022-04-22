@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\StatusController;
-use App\Http\Controllers\TaskController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TargetController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -24,7 +24,21 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function() {
     // HomeController
-    Route::get('/home/{id}', [HomeController::class, 'setTimer'])->name('setTimer');
+    Route::controller(HomeController::class)->group(function() {
+        Route::get('/home/{id}', 'setTimer')->name('setTimer');
+        Route::get('/home/incrementNExec/{id}', 'incrementNExec')->name('home-incrementNExec');
+    });
+
+    // TargetController
+    Route::controller(TargetController::class)->group(function() {
+        Route::get('/targets', 'index')->name('targets');
+        Route::get('/targets/create', 'create')->name('targets-create');
+        Route::post('/targets/store', 'store')->name('targets-store');
+        Route::get('/targets/{id}', 'edit')->name('targets-edit');
+        Route::post('/targets/{id}', 'update')->name('targets-update');
+        Route::get('/targets/accomplish/destroy/{id}', 'destroy')->name('targets-destroy');
+        Route::get('/targets/accomplish/{id}', 'accomplish')->name('targets-accomplish');
+    });
 
     // TaskController
     Route::controller(TaskController::class)->group(function() {
@@ -38,14 +52,12 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/tasks/update/{id}/{priority_id}', 'dragUpdate')->name('tasks-drag-update');
     });
 
-    // StatusController
-    // Route::get('/status', [StatusController::class, 'index'])->name('status');
-
     // UserController
     Route::controller(UserController::class)->group(function() {
         Route::get('/mypage', 'index')->name('mypage');
         Route::get('/mypage/edit', 'edit')->name('mypage-edit');
         Route::post('/mypage/update', 'update')->middleware(['can:generalAndAdmin'])->name('mypage-store');
+        Route::get('/mypage/destroy', 'destroy')->middleware(['can:generalAndAdmin'])->name('mypage-destroy');
     });
 
     // TagController
@@ -54,10 +66,6 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/mypage/tag/store', 'tagStore')->name('mypage-tag-store');
     });
 });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');

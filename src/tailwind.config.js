@@ -22,8 +22,10 @@ module.exports = {
                 orange: colors.orange,
                 cyan: colors.cyan,
                 sky: colors.sky
-            }
+            },
+            
         },
+        
     },
 
     plugins: [

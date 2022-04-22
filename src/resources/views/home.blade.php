@@ -31,10 +31,11 @@
             </div>
         </div>
         
-        <p class="text-center text-2xl font-bold pt-12" id="task-title">
+        <p class="text-center text-2xl font-bold pt-12">
             @auth    
                 @isset ($tasks[0]->title)
-                    {{ $tasks[0]->title }}
+                    <p class="text-center text-2xl font-bold" id="task-title">{{ $tasks[0]->title }}</p>
+                    <span class="hidden" id="n-exec-increment" data-tasks-id-increment="{{ $tasks[0]->tasks_id }}"></span>
                 @else 
                     <div class="flex flex-col items-center">
                         <i class="fa-solid fa-arrow-down animate-bounce text-lg"></i>
@@ -53,7 +54,7 @@
 
     <!-- Task一覧 -->
     @auth
-        <div class="border bg-white rounded-lg p-6 m-3 h-80 w-72 overflow-y-scroll">
+        <div class="border bg-white rounded-lg p-6 m-3 h-80 w-96 overflow-y-scroll">
             <p class="font-bold text-2xl pb-6">Taskの指定</p>
             <ul>
                 @foreach ($tasks as $item)
@@ -89,7 +90,7 @@
             </a>
         </div>
         <div class="text-center">
-            <a href="guest_login" class="text-2xl font-body text-gray-500 px-12 hover:bg-gray-300" id="intro">
+            <a href="/guest_login" class="text-2xl font-body text-gray-500 px-12 hover:bg-gray-300" id="intro">
                 ゲストログイン
             </a>
         </div>
