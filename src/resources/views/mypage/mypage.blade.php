@@ -26,7 +26,7 @@
             <p class="font-normal text-gray-300">{{ $created_at }}から利用しています。</p>
             <div class="flex justify-center pt-5">
                 <x-tag-modal :tags="$tags">タグを編集する</x-tag-modal>
-                <x-button onclick="location.href='/mypage/edit'">自己情報を編集する</x-button>
+                <x-button onclick="location.href='/mypage/edit'">アカウント情報を編集する</x-button>
             </div>
         </div>
 

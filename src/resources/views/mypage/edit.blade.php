@@ -9,7 +9,7 @@
         <div class="p-4 max-w-lg mx-auto bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
             <form class="space-y-6" action="/mypage/update" method="POST">
                 @csrf
-                <h5 class="text-xl font-medium text-gray-900 dark:text-white">自己情報</h5>
+                <h5 class="text-xl font-medium text-gray-900 dark:text-white">アカウント情報</h5>
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
                 <div>
                     <label for="user_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">名前</label>
@@ -27,7 +27,7 @@
             </form>
         </div>
         <div class="pt-2 text-center">
-            <a href="/mypage/destroy"><p class="text-gray-400 hover:text-gray-600 text-xs inline-block">ユーザー情報を削除する</p></a>
+            <a href="/mypage/destroy"><p class="text-gray-400 hover:text-gray-600 text-xs inline-block">アカウントを削除する</p></a>
         </div>
     </div>
 @endsection
