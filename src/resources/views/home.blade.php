@@ -55,7 +55,7 @@
     <!-- Task一覧 -->
     @auth
         <div class="border bg-white rounded-lg p-6 m-3 h-80 w-96 overflow-y-scroll">
-            <p class="font-bold text-2xl pb-6">Taskの指定</p>
+            <p class="font-bold text-2xl pb-6">タスクの指定</p>
             <ul>
                 @foreach ($tasks as $item)
                     <li id="setTimer" class="hover:underline hover:text-gray-400 cursor-pointer pb-2" data-tasks-id="{{ $item->tasks_id }}">{{ $item->title }}</li>
