@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Task;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\TargetsType;
 
-class TaskFactory extends Factory
+class TargetsTypeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,12 +15,12 @@ class TaskFactory extends Factory
     public function definition()
     {
         $targets_id = 0;
+
         return [
             'targets_id' => $targets_id,
             'title' => $this->faker->word,
-            'contents' => 'adgha',
-            'timer' => rand(1, 300),
-            'priority' => rand(0, 2),
+            'contents' => $this->faker->realText,
+            'accomplished' => 0
         ];
     }
 }

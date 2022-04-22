@@ -11,6 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        // typeはデフォルトtargetかそうではないかのフラグ。基本的に0を指定する。
         $targets = Target::where('users_id', Auth::id())
             ->where('type', 0)
             ->first();

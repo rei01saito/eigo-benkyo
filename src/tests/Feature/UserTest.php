@@ -10,6 +10,7 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     use RefreshDatabase;
+    private $user_id;
 
     public function setUp(): void
     {
@@ -19,6 +20,7 @@ class UserTest extends TestCase
             'email' => $user->email,
             'password' => 'password',
         ]);
+        $this->user_id = $user->id;
         $this->assertAuthenticated();
     }
 
@@ -28,7 +30,7 @@ class UserTest extends TestCase
         $response->assertOK();
     }
 
-    public function test_request_to_test()
+    public function test_request_to_edit()
     {
         $response = $this->get('/mypage/edit');
         $response->assertOK();

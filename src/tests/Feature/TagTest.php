@@ -11,7 +11,7 @@ use Tests\TestCase;
 class TagTest extends TestCase
 {
     use RefreshDatabase;
-    private $current_user;
+    private $user;
 
     public function setUp(): void
     {
@@ -22,7 +22,7 @@ class TagTest extends TestCase
             'password' => 'password',
         ]);
         $this->assertAuthenticated();
-        $this->current_user = $user;
+        $this->user = $user;
     }
 
     public function test_request_to_tagStore()
@@ -36,7 +36,7 @@ class TagTest extends TestCase
         ];
         $response = $this->post('/mypage/tag/store', $array);
         $response->assertRedirect('/mypage');
-        $tags = Tag::where('user_id', $this->current_user->id)->get();
+        $tags = Tag::where('user_id', $this->user->id)->get();
         foreach ($tags as $t) {
             $this->assertDatabaseHas('tags', [
                 'tags_name' => $t->tags_name
@@ -74,7 +74,7 @@ class TagTest extends TestCase
     public function test_request_to_tagDelete()
     {
         Tag::factory()->create([
-            'user_id' => $this->current_user->id
+            'user_id' => $this->user->id
         ]);
         $this->assertDatabaseCount('tags', 1);
         $response = $this->get('/mypage/tag/delete');
