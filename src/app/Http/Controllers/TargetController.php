@@ -69,12 +69,11 @@ class TargetController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:30',
-            'contents' => 'required|max:3000'
+            'contents' => 'max:3000'
         ],
         [
             'title.required' => '目標名を入力して下さい。',
             'title.max' => '目標名は30文字以内にして下さい。',
-            'contents.required' => '内容を入力して下さい。',
             'contents.max' => '内容は3000文字以内にして下さい。',
         ]);
         if ($validator->fails()) {
@@ -95,7 +94,7 @@ class TargetController extends Controller
 
     public function accomplish($id)
     {
-        $target = Target::where('users_id', Auth::id())
+        Target::where('users_id', Auth::id())
             ->where('targets_id', $id)->delete();
 
         $targetsType = Target::onlyTrashed()->where('users_id', Auth::id())
@@ -109,7 +108,7 @@ class TargetController extends Controller
 
     public function destroy($id)
     {
-        $target = Target::onlyTrashed()->where('users_id', Auth::id())
+        Target::onlyTrashed()->where('users_id', Auth::id())
             ->where('targets_id', $id)->forceDelete();
             
         return redirect()->route('targets');
