@@ -9,6 +9,15 @@ use App\Models\Target;
 
 class HomeController extends Controller
 {
+    public function top()
+    {
+        if (Auth::check()) {
+            return redirect()->route('home');
+        } else {
+            return view('home/top');
+        }
+    }
+
     public function index()
     {
         // typeはデフォルトtargetかそうではないかのフラグ。基本的に0を指定する。
@@ -21,7 +30,7 @@ class HomeController extends Controller
         } else {
             $tasks = [];
         }
-        return view('home')->with(compact('tasks'));
+        return view('home/home')->with(compact('tasks'));
     }
 
     public function setTimer($id)

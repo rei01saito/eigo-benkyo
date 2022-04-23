@@ -21,6 +21,7 @@ class GuestSeeder extends Seeder
         $user = User::create([
             'name' => 'guest',
             'email' => 'guest@email.com',
+            'email_verified_at' => now(),
             'password' => Hash::make('password1234'),
             'role' => 1
         ]);

@@ -9,7 +9,7 @@ window.onload = () => {
   let path = location.pathname;
   if (path === "/tasks") {
     TaskEvent();
-  } else if (path === "/") {
+  } else if (path === "/home" || path === "/") {
     HomeEvent();
   } else if (path === "/mypage") {
     TagEvent();

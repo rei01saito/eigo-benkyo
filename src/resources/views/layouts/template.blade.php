@@ -12,7 +12,7 @@
 <body class="h-screen bg-slate-100">
     <header class="border sm:px-12 py-2 bg-blue-200 shadow fixed w-full z-50">
         <nav class="flex items-center justify-between px-7">
-            <p class="text-4xl px-4 font-bold font-body"><a href="/">Katask</a></p>
+            <p class="text-4xl px-4 font-bold font-body"><a href="{{ Auth::check() ? '/home' : '/' }}">Katask</a></p>
             <ul class="flex">
                             
                 @auth
@@ -72,13 +72,7 @@
     
     <main class="bg-slate-100">
         <div class="container mx-auto">
-            @auth
-                @yield('main')
-            @endauth
-
-            @guest
-                @yield('introduction')
-            @endguest
+            @yield('main')
         </div>
     </main>
 

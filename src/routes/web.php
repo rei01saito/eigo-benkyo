@@ -20,11 +20,12 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'top'])->name('top');
 
-Route::middleware(['auth'])->group(function() {
+Route::middleware(['auth', 'verified'])->group(function() {
     // HomeController
     Route::controller(HomeController::class)->group(function() {
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/home/{id}', 'setTimer')->name('setTimer');
         Route::get('/home/incrementNExec/{id}', 'incrementNExec')->name('home-incrementNExec');
     });
