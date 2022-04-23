@@ -1,3 +1,3 @@
 <div class="pt-8 bg-slate-100">
-    <p class="text-center">@2022 Katask all rights reserved.</p>
+    <p class="text-center">© {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')</p>
 </div>

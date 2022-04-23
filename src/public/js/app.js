@@ -4983,7 +4983,7 @@ window.onload = function () {
 
   if (path === "/tasks") {
     (0,_tasks_js__WEBPACK_IMPORTED_MODULE_1__.TaskEvent)();
-  } else if (path === "/") {
+  } else if (path === "/home" || path === "/") {
     (0,_home_js__WEBPACK_IMPORTED_MODULE_0__.HomeEvent)();
   } else if (path === "/mypage") {
     (0,_tags_js__WEBPACK_IMPORTED_MODULE_2__.TagEvent)();

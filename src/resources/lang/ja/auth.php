@@ -12,7 +12,7 @@
 */
 
 return [
-    'failed'   => '認証情報と一致するレコードがありません。',
+    'failed'   => '認証情報と一致するアカウントがありません。',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'ログインの試行回数が多すぎます。:seconds 秒後にお試しください。',
 ];

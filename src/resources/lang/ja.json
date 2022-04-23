@@ -536,7 +536,7 @@
     "This image": "This image",
     "This is a secure area of the application. Please confirm your password before continuing.": "This is a secure area of the application. Please confirm your password before continuing.",
     "This password does not match our records.": "パスワードが違います。",
-    "This password reset link will expire in :count minutes.": "This password reset link will expire in :count minutes.",
+    "This password reset link will expire in :count minutes.": "このリンクの有効期限は受信してから、:count 分です。",
     "This payment was already successfully confirmed.": "This payment was already successfully confirmed.",
     "This payment was cancelled.": "This payment was cancelled.",
     "This resource no longer exists": "This resource no longer exists",
