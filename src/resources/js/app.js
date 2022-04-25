@@ -1,6 +1,7 @@
 require('jquery-ui/ui/widgets/draggable');
 require('jquery-ui/ui/widgets/droppable');
 require('./bootstrap');
+require('flowbite/dist/flowbite');
 import { HomeEvent } from './home.js';
 import { TaskEvent } from './tasks.js';
 import { TagEvent } from './tags.js';

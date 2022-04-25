@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    {{-- <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script> --}}
 </head>
 <body class="h-screen bg-slate-100">
     <header class="border sm:px-12 py-2 bg-blue-200 shadow fixed w-full z-50">
