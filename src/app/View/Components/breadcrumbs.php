@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class breadcrumbs extends Component
+class Breadcrumbs extends Component
 {
     /**
      * breadcrumbsの引数（ページ名）。|で区切る。
