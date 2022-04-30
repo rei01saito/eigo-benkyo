@@ -52,7 +52,7 @@ class HomeTest extends TestCase
 
     public function test_request_to_index()
     {
-        $response = $this->get('/');
+        $response = $this->get('/home');
         $response->assertOk();
     }
 
@@ -69,7 +69,7 @@ class HomeTest extends TestCase
     {
         $task = Task::where('tasks_id', $this->tasks_id)->first();
         $response = $this->get('/home/incrementNExec/'.$this->tasks_id);
-        $response->assertRedirect('/');
+        $response->assertRedirect('/home');
         $task_updated = Task::where('tasks_id', $this->tasks_id)->first();
     
         $this->assertEquals($task->n_exec + 1, $task_updated->n_exec);
