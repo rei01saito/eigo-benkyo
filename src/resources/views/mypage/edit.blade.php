@@ -27,7 +27,7 @@
             </form>
         </div>
         <div class="pt-2 text-center">
-            <a href="/mypage/destroy"><p class="text-gray-400 hover:text-gray-600 text-xs inline-block">アカウントを削除する</p></a>
+            <a href="/mypage/destroy" id="delete-account"><p class="text-gray-400 hover:text-gray-600 text-xs inline-block">アカウントを削除する</p></a>
         </div>
     </div>
 @endsection
