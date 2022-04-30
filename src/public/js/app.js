@@ -4967,7 +4967,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./home.js */ "./resources/js/home.js");
 /* harmony import */ var _tasks_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tasks.js */ "./resources/js/tasks.js");
 /* harmony import */ var _tags_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tags.js */ "./resources/js/tags.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+/* harmony import */ var _deleteConfirm_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./deleteConfirm.js */ "./resources/js/deleteConfirm.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 __webpack_require__(/*! jquery-ui/ui/widgets/draggable */ "./node_modules/jquery-ui/ui/widgets/draggable.js");
 
 __webpack_require__(/*! jquery-ui/ui/widgets/droppable */ "./node_modules/jquery-ui/ui/widgets/droppable.js");
@@ -4975,6 +4976,7 @@ __webpack_require__(/*! jquery-ui/ui/widgets/droppable */ "./node_modules/jquery
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! flowbite/dist/flowbite */ "./node_modules/flowbite/dist/flowbite.js");
+
 
 
 
@@ -4989,12 +4991,14 @@ window.onload = function () {
     (0,_home_js__WEBPACK_IMPORTED_MODULE_0__.HomeEvent)();
   } else if (path === "/mypage") {
     (0,_tags_js__WEBPACK_IMPORTED_MODULE_2__.TagEvent)();
+  } else if (path === "/mypage/edit") {
+    (0,_deleteConfirm_js__WEBPACK_IMPORTED_MODULE_3__.DeleteConfirmEvent)();
   }
 };
 
 
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_3__["default"].start();
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_4__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_4__["default"].start();
 
 /***/ }),
 
@@ -5026,6 +5030,30 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/deleteConfirm.js":
+/*!***************************************!*\
+  !*** ./resources/js/deleteConfirm.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DeleteConfirmEvent": () => (/* binding */ DeleteConfirmEvent)
+/* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+function DeleteConfirmEvent() {
+  $('#delete-account').on('click', function (e) {
+    e.preventDefault();
+
+    if (confirm('アカウントを削除しますが、本当によろしいですか？\n削除したアカウントは復元できません。')) {
+      location.href = "/mypage/destroy";
+    }
+  });
+}
 
 /***/ }),
 

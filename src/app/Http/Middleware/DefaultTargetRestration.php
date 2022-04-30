@@ -41,7 +41,8 @@ class DefaultTargetRestration
             foreach ($targets as $t) {
                 TargetsType::create([
                     'targets_id' => $t->targets_id,
-                    'title' => $array[$i]
+                    'title' => $array[$i],
+                    'contents' => 'これはサンプル目標です。'
                 ]);
                 $i++;
             }

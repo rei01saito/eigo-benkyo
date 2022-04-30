@@ -5,6 +5,7 @@ require('flowbite/dist/flowbite');
 import { HomeEvent } from './home.js';
 import { TaskEvent } from './tasks.js';
 import { TagEvent } from './tags.js';
+import { DeleteConfirmEvent } from './deleteConfirm.js';
 
 window.onload = () => {
   let path = location.pathname;
@@ -14,6 +15,8 @@ window.onload = () => {
     HomeEvent();
   } else if (path === "/mypage") {
     TagEvent();
+  } else if (path === "/mypage/edit") {
+    DeleteConfirmEvent();
   }
 };
 
