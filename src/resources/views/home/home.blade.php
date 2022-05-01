@@ -58,7 +58,7 @@
             <p class="font-bold text-2xl pb-6">タスクの指定</p>
             <ul>
                 @foreach ($tasks as $item)
-                    <li id="setTimer" class="hover:underline hover:text-gray-400 cursor-pointer pb-2" data-tasks-id="{{ $item->tasks_id }}">{{ $item->title }}</li>
+                    <li class="hover:underline hover:text-gray-400 cursor-pointer pb-2 set-timer" data-tasks-id="{{ $item->tasks_id }}">{{ $item->title }}</li>
                     <li class="hidden">{{ $item->contents }}</li>
                 @endforeach
             </ul>
