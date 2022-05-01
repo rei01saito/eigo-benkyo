@@ -5069,23 +5069,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "HomeEvent": () => (/* binding */ HomeEvent)
 /* harmony export */ });
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function HomeEvent() {
   // ログイン前
   $('#intro').fadeIn(1000); // ログイン後
 
-  var timer = document.querySelectorAll('#setTimer');
-  var timerDisplay = document.querySelector('#timer-display');
+  var timer = $('.set-timer');
+  var timerDisplay = $('#timer-display');
   var clickFlag = true;
   var stopFlag = false;
   var i_amount = 0;
   $('#start-button').on('click', function () {
-    var amount = timerDisplay.getAttribute('data-timer-amount');
+    var amount = timerDisplay.data('timer-amount');
 
     if (amount == 0) {
       return false;
@@ -5096,9 +5090,8 @@ function HomeEvent() {
 
     if (!stopFlag) {
       // amount初期値
-      i_amount = timerDisplay.getAttribute('data-timer-amount');
-    } // console.log(i_amount)
-
+      i_amount = timerDisplay.data('timer-amount');
+    }
 
     if (clickFlag && amount > 0) {
       var now = new Date();
@@ -5106,13 +5099,13 @@ function HomeEvent() {
       var time = end.getTime(); // 残りtimestamp
 
       var intervalId = setInterval(function () {
-        amount = timerDisplay.getAttribute('data-timer-amount');
+        amount = timerDisplay.data('timer-amount');
         time -= 1000;
         var remain = time - now.getTime();
-        timerDisplay.setAttribute('data-timer-amount', remain / 1000);
+        timerDisplay.data('timer-amount', remain / 1000);
         var hour = Math.floor(remain / (60 * 1000));
         var min = Math.floor(remain % (60 * 1000) / 1000);
-        timerDisplay.textContent = hour + ':' + ('0' + min).slice(-2);
+        timerDisplay.text(hour + ':' + ('0' + min).slice(-2));
 
         if (remain < 1) {
           clearInterval(intervalId);
@@ -5124,32 +5117,18 @@ function HomeEvent() {
           location.href = url;
         }
 
-        var _iterator = _createForOfIteratorHelper(timer),
-            _step;
+        timer.each(function (index, element) {
+          $(element).on('click', function () {
+            clearInterval(intervalId);
+            $('#spin').css('transform', 'rotate(0deg)');
+            $('#stop-button').addClass('hidden');
+            $('#start-button').removeClass('hidden');
+            clickFlag = true;
+            stopFlag = false;
+          });
+        });
+        var deg = (1 - remain / (i_amount * 1000)) * 360; // console.log(deg)
 
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var t = _step.value;
-            t.addEventListener('click', function () {
-              clearInterval(intervalId);
-              $('#spin').css('transform', 'rotate(0deg)');
-              $('#stop-button').addClass('hidden');
-              $('#start-button').removeClass('hidden');
-              clickFlag = true;
-              stopFlag = false;
-            });
-          } // console.log('i_amount: '+i_amount)
-          // console.log('amount: '+amount)
-          // console.log('remain: '+remain)
-
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-
-        var deg = (1 - remain / (i_amount * 1000)) * 360;
-        console.log(deg);
         $('#spin').css('transform', 'rotate(' + deg + 'deg)');
       }, 1000);
       $('#stop-button').on('click', function () {
@@ -5158,7 +5137,6 @@ function HomeEvent() {
         $('#start-button').removeClass('hidden');
         clickFlag = true;
         stopFlag = true;
-        var stopNow = new Date();
       });
     }
 
@@ -5166,33 +5144,22 @@ function HomeEvent() {
   });
 
   if (timer.length) {
-    var _iterator2 = _createForOfIteratorHelper(timer),
-        _step2;
-
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var t = _step2.value;
-        t.addEventListener('click', function (event) {
-          var task_id = event.currentTarget.getAttribute('data-tasks-id');
-          var url = "/home/" + task_id;
-          var timer = document.querySelector('.timer');
-          fetch(url, {}).then(function (response) {
-            return response.json();
-          }).then(function (data) {
-            timerDisplay.textContent = data["timer"] + ':00';
-            timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
-            $('#task-title').text(data["title"]);
-            $('#n-exec-increment').attr('data-tasks-id-increment', task_id);
-          })["catch"](function (err) {
-            alert('通信に失敗しました。');
-          });
+    timer.each(function (index, element) {
+      $(element).on('click', function (event) {
+        var task_id = $(event.currentTarget).data('tasks-id');
+        var url = "/home/" + task_id;
+        fetch(url, {}).then(function (response) {
+          return response.json();
+        }).then(function (data) {
+          timerDisplay.text(data["timer"] + ':00');
+          timerDisplay.data('timer-amount', data["timer"] * 60);
+          $('#task-title').text(data["title"]);
+          $('#n-exec-increment').attr('data-tasks-id-increment', task_id);
+        })["catch"](function (err) {
+          alert('通信に失敗しました。');
         });
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
+      });
+    });
   }
 }
 

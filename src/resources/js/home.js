@@ -4,14 +4,14 @@ export function HomeEvent() {
   $('#intro').fadeIn(1000);
 
   // ログイン後
-  const timer = document.querySelectorAll('#setTimer');
-  const timerDisplay = document.querySelector('#timer-display');
+  const timer = $('.set-timer');
+  const timerDisplay = $('#timer-display');
   let clickFlag = true;
   let stopFlag = false;
   let i_amount = 0;
   
   $('#start-button').on('click', function() {
-    let amount = timerDisplay.getAttribute('data-timer-amount');
+    let amount = timerDisplay.data('timer-amount');
     if (amount == 0) {
       return false;
     }
@@ -20,9 +20,8 @@ export function HomeEvent() {
     
     if (!stopFlag) {
       // amount初期値
-      i_amount = timerDisplay.getAttribute('data-timer-amount');
+      i_amount = timerDisplay.data('timer-amount');
     }
-    // console.log(i_amount)
 
     if (clickFlag && (amount > 0)) {
       
@@ -31,15 +30,15 @@ export function HomeEvent() {
       let time = end.getTime() // 残りtimestamp
       
       let intervalId = setInterval(function() {
-        amount = timerDisplay.getAttribute('data-timer-amount');
+        amount = timerDisplay.data('timer-amount');
 
         time -= 1000;
         
         let remain = time - now.getTime();
-        timerDisplay.setAttribute('data-timer-amount', remain / 1000);
+        timerDisplay.data('timer-amount', remain / 1000);
         let hour = Math.floor(remain / (60 * 1000));
         let min = Math.floor((remain % (60 * 1000)) / 1000);
-        timerDisplay.textContent = hour + ':' + ('0' + min).slice(-2);
+        timerDisplay.text(hour + ':' + ('0' + min).slice(-2));
 
         if (remain < 1) {
           clearInterval(intervalId);
@@ -52,24 +51,21 @@ export function HomeEvent() {
           location.href = url;
         }
 
-        for (let t of timer) {
-          t.addEventListener('click', () => {
-              clearInterval(intervalId);
-              $('#spin').css('transform', 'rotate(0deg)');
-              $('#stop-button').addClass('hidden');
-              $('#start-button').removeClass('hidden');
-              clickFlag = true;
-              stopFlag = false;
+        timer.each(function(index, element) {
+          $(element).on('click', function() {
+            clearInterval(intervalId);
+            $('#spin').css('transform', 'rotate(0deg)');
+            $('#stop-button').addClass('hidden');
+            $('#start-button').removeClass('hidden');
+            clickFlag = true;
+            stopFlag = false;
           })
-        }
+        })
 
-        // console.log('i_amount: '+i_amount)
-        // console.log('amount: '+amount)
-        // console.log('remain: '+remain)
-        
         let deg = (1 - ( (remain) / (i_amount * 1000))) * 360;
-        console.log(deg)
+        // console.log(deg)
         $('#spin').css('transform', 'rotate(' + deg + 'deg)');
+
       }, 1000);
 
       $('#stop-button').on('click', function() {
@@ -78,27 +74,25 @@ export function HomeEvent() {
         $('#start-button').removeClass('hidden');
         clickFlag = true;
         stopFlag = true;
-        let stopNow = new Date();
       });
     }
 
-      clickFlag = false;
+    clickFlag = false;
   });
 
   if (timer.length) {
-    for (let t of timer) {
-      t.addEventListener('click', event => {
-        let task_id = event.currentTarget.getAttribute('data-tasks-id');
+    timer.each(function(index, element) {
+      $(element).on('click', function(event) {
+        let task_id = $(event.currentTarget).data('tasks-id');
         let url = "/home/" + task_id;
-        let timer = document.querySelector('.timer');
         
         fetch(url, {
         
         })
         .then(response => response.json())
         .then(data => {
-          timerDisplay.textContent = data["timer"] + ':00';
-          timerDisplay.setAttribute('data-timer-amount', data["timer"] * 60);
+          timerDisplay.text(data["timer"] + ':00');
+          timerDisplay.data('timer-amount', data["timer"] * 60);
           $('#task-title').text(data["title"]);
           $('#n-exec-increment').attr('data-tasks-id-increment', task_id);
         })
@@ -106,6 +100,6 @@ export function HomeEvent() {
           alert('通信に失敗しました。')
         })
       });    
-    }
+    })
   }
 }
