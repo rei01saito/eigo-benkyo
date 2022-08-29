@@ -1,7 +1,7 @@
 # Kataskについて
 
 Kataskはタスク管理のアプリケーションです。<br>
-https://katask.net
+~~https://katask.net~~ (改修中)
 
 ## 説明
 
