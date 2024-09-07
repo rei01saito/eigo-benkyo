@@ -1,7 +1,7 @@
 services:
   app:
     container_name: katask-app
-    build: 
+    build:
       context: .
       dockerfile: ./.docker/php/Dockerfile
     volumes:
@@ -35,7 +35,7 @@ services:
     environment:
       - WATCHPACK_POLLING=true
     tty: true
-  
+
   db:
     container_name: katask-db
     image: mysql:8.0
@@ -45,8 +45,8 @@ services:
       - ./.docker/mysql/data:/var/lib/mysql
       - ./.docker/mysql/my.cnf:/etc/msql/conf.d
     environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      TZ: 'Asia/Tokyo'
+      MYSQL_DATABASE: katask
+      MYSQL_USER: katask
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      TZ: "Asia/Tokyo"
