@@ -8,5 +8,8 @@ stop:
 	docker compose stop
 destroy:
 	docker compose down --rmi all --volumes --remove-orphans
-shell:
+
+back:
 	docker compose exec app bash
+front:
+	docker compose exec node bash
