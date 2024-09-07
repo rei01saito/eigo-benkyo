@@ -30,6 +30,7 @@ services:
       dockerfile: ./.docker/node/Dockerfile
     ports:
       - 3000:3000
+      - 6006:6006
     volumes:
       - ./frontend/:/usr/src/app
     environment:
