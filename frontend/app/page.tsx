@@ -1,6 +1,6 @@
 'use client'
 
-export default function Home() {
+export default function Top() {
   const handleClick = async () => {
     const data = await fetch('http://localhost:80/api/test').then((data) =>
       data.json(),
@@ -38,7 +38,7 @@ export default function Home() {
           </div>
           <div className="text-center">
             <a
-              href="/guest_login"
+              href="home"
               className="text-2xl font-body text-gray-500 px-12 hover:bg-gray-300"
             >
               ゲストログイン
