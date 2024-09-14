@@ -2,6 +2,8 @@
 
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
+import Modal from 'react-modal'
+import useSWR from 'swr'
 
 type Task = {
   id: number
@@ -15,40 +17,31 @@ type TaskProps = {
   tasks: Task[]
 }
 
+const fetcher = async (url: string) => {
+  return await fetch(url).then((res) => res.json())
+}
+
 const Task: NextPage<TaskProps> = () => {
-  const tasks: Task[] = [
-    {
-      id: 1,
-      title: 'sample title1',
-      contents: 'sample contents',
-      minutes: 1,
-      status: 1,
-    },
-    {
-      id: 1,
-      title: 'sample title2',
-      contents: 'sample contents',
-      minutes: 1,
-      status: 2,
-    },
-    {
-      id: 1,
-      title: 'sample title3',
-      contents: 'sample contents',
-      minutes: 1,
-      status: 3,
-    },
-  ]
+  const { data, error, isLoading } = useSWR('/test.json', fetcher)
+  console.log(data)
+  const tasks: Task[] = data.tasks
 
   const [pendingTask, setPendingTask] = useState<Task[]>([])
   const [inProgressTask, setInProgressTask] = useState<Task[]>([])
   const [completedTask, setCompletedTask] = useState<Task[]>([])
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [modalTask, setModalTask] = useState<Task>()
+  const handleOpenModal = (taskId: number) => {
+    setIsModalOpen(true)
+    console.log(taskId)
+    setModalTask(tasks.find((task) => task.id === taskId))
+  }
 
   useEffect(() => {
     setPendingTask(tasks.filter((task) => task.status === 1))
     setInProgressTask(tasks.filter((task) => task.status === 2))
     setCompletedTask(tasks.filter((task) => task.status === 3))
-  })
+  }, [])
 
   return (
     <>
@@ -66,22 +59,14 @@ const Task: NextPage<TaskProps> = () => {
                 <div className="task-index" data-priority-id="0">
                   {pendingTask.map((task) => {
                     return (
-                      <div className="task" data-taskId={task.id}>
+                      <div
+                        key={task.id}
+                        className="task"
+                        onClick={() => handleOpenModal(task.id)}
+                      >
                         <div className="hover:cursor-pointer mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                           <div className="flex justify-between">
                             <p className="text-lg">{task.title}</p>
-                            <button
-                              type="button"
-                              data-modal-toggle="authentication-edit-modal"
-                            >
-                              <i
-                                className="fa-solid fa-pen-to-square hover:bg-gray-300 edit-task"
-                                data-task-title={task.title}
-                                data-task-contents={task.contents}
-                                data-task-timer={task.minutes}
-                                data-tasks-id={task.id}
-                              ></i>
-                            </button>
                           </div>
                           <p className="hidden whitespace-pre-wrap text-sm mx-3 my-1 p-1">
                             {task.contents}
@@ -94,9 +79,6 @@ const Task: NextPage<TaskProps> = () => {
                     )
                   })}
                 </div>
-
-                {/* pending */}
-                {/* <x-task-modal-thinking /> */}
               </div>
             </div>
           </div>
@@ -109,22 +91,14 @@ const Task: NextPage<TaskProps> = () => {
                 <div className="task-index" data-priority-id="1">
                   {inProgressTask.map((task) => {
                     return (
-                      <div className="task" data-taskId={task.id}>
+                      <div
+                        key={task.id}
+                        className="task"
+                        onClick={() => handleOpenModal(task.id)}
+                      >
                         <div className="hover:cursor-pointer mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                           <div className="flex justify-between">
                             <p className="text-lg">{task.title}</p>
-                            <button
-                              type="button"
-                              data-modal-toggle="authentication-edit-modal"
-                            >
-                              <i
-                                className="fa-solid fa-pen-to-square hover:bg-gray-300 edit-task"
-                                data-task-title={task.title}
-                                data-task-contents={task.contents}
-                                data-task-timer={task.minutes}
-                                data-tasks-id={task.id}
-                              ></i>
-                            </button>
                           </div>
                           <p className="hidden whitespace-pre-wrap text-sm mx-3 my-1 p-1">
                             {task.contents}
@@ -137,9 +111,6 @@ const Task: NextPage<TaskProps> = () => {
                     )
                   })}
                 </div>
-
-                {/* in_progress */}
-                {/* <x-task-modal-doing /> */}
               </div>
             </div>
           </div>
@@ -152,22 +123,15 @@ const Task: NextPage<TaskProps> = () => {
                 <div className="task-index" data-priority-id="2">
                   {completedTask.map((task) => {
                     return (
-                      <div className="task" data-taskId={task.id}>
+                      <div
+                        key={task.id}
+                        className="task"
+                        onClick={() => handleOpenModal(task.id)}
+                      >
                         <div className="hover:cursor-pointer mx-3 my-1 p-2 border rounded-md active:bg-gray-100 shadow">
                           <div className="flex justify-between">
                             <p className="text-lg">{task.title}</p>
-                            <button
-                              type="button"
-                              data-modal-toggle="authentication-edit-modal"
-                            >
-                              <i
-                                className="fa-solid fa-pen-to-square hover:bg-gray-300 edit-task"
-                                data-task-title={task.title}
-                                data-task-contents={task.contents}
-                                data-task-timer={task.minutes}
-                                data-tasks-id={task.id}
-                              ></i>
-                            </button>
+                            <button type="button"></button>
                           </div>
                           <p className="hidden whitespace-pre-wrap text-sm mx-3 my-1 p-1">
                             {task.contents}
@@ -180,20 +144,47 @@ const Task: NextPage<TaskProps> = () => {
                     )
                   })}
                 </div>
-
-                {/* completed */}
-                {/* <x-task-modal-done /> */}
               </div>
             </div>
           </div>
         </div>
 
-        {/* <x-task-modal-edit /> */}
-
-        {/* <!-- loading --> */}
-        <div className="load-icon text-center hidden">
-          <i className="fas fa-spinner fa-pulse"></i>
-        </div>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() => setIsModalOpen(false)}
+          ariaHideApp={false}
+        >
+          {modalTask && (
+            <div className="flex flex-col">
+              <input
+                type="text"
+                className="py-2 focus:border-1 focus:border-blue-100"
+                value={modalTask.id}
+                readOnly
+              />
+              <input
+                type="text"
+                className="py-2 focus:border-1 focus:border-blue-100"
+                value={modalTask.title}
+              />
+              <input
+                type="text"
+                className="py-2 focus:border-1 focus:border-blue-100"
+                value={modalTask.contents}
+              />
+              <input
+                type="text"
+                className="py-2 focus:border-1 focus:border-blue-100"
+                value={modalTask.minutes}
+              />
+              <input
+                type="text"
+                className="py-2 focus:border-1 focus:border-blue-100"
+                value={modalTask.status}
+              />
+            </div>
+          )}
+        </Modal>
       </div>
     </>
   )
