@@ -6,8 +6,6 @@ services:
       dockerfile: ./.docker/php/Dockerfile
     volumes:
       - ./backend/:/var/www/html
-    ports:
-      - 8000:8000
     extra_hosts:
       - "host.docker.internal:host-gateway"
 

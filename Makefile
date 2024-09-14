@@ -1,6 +1,10 @@
 # container
 build:
 	docker compose build --no-cache
+	@make up
+	docker compose exec app bash -c "cp .env.example .env"
+	docker compose exec app bash -c "chmod -R 777 storage"
+	docker compose exec app bash -c "php artisan key:generate"
 
 ps:
 	docker compose ps
@@ -27,3 +31,9 @@ front:
 
 storybook:
 	docker compose exec node bash -c "npm run storybook"
+
+set:
+	@make back \
+		cp .env.example .env \
+		&& chmod -R 777 storage \
+		&& php artisan key:generate
