@@ -4,7 +4,9 @@ build:
 	@make up
 	docker compose exec app bash -c "cp .env.example .env"
 	docker compose exec app bash -c "chmod -R 777 storage"
+	docker compose exec app bash -c "composer install"
 	docker compose exec app bash -c "php artisan key:generate"
+	docker compose exec node bash -c "npm install"
 
 ps:
 	docker compose ps
