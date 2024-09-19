@@ -1,4 +1,4 @@
-import { Task } from '@/features/home/types'
+import { Task } from '@/features/task/types'
 
 type Props = {
   tasks: Task[]

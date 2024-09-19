@@ -2,23 +2,16 @@
 
 import { fetchTasks } from '@/features/task/api/fetchTasks'
 import TaskCard from '@/features/task/components/TaskCard'
+import { TaskModal } from '@/features/task/components/TaskModal'
+import { Task } from '@/features/task/types'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import Modal from 'react-modal'
-
-type Task = {
-  id: number
-  title: string
-  contents: string
-  minutes: number
-  status: number
-}
 
 type TaskProps = {
   tasks: Task[]
 }
 
-const Task: NextPage<TaskProps> = () => {
+const TaskPage: NextPage<TaskProps> = () => {
   const data = fetchTasks()
   const [tasks, setTasks] = useState<Task[]>([])
   const [pendingTask, setPendingTask] = useState<Task[]>([])
@@ -65,49 +58,16 @@ const Task: NextPage<TaskProps> = () => {
           />
         </div>
 
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
-          ariaHideApp={false}
-        >
-          {modalTask && (
-            <div className="flex flex-col">
-              <input
-                type="text"
-                className="py-2 focus:border-1 focus:border-blue-100"
-                value={modalTask.id}
-                readOnly
-              />
-              <input
-                type="text"
-                className="py-2 focus:border-1 focus:border-blue-100"
-                value={modalTask.title}
-                readOnly
-              />
-              <input
-                type="text"
-                className="py-2 focus:border-1 focus:border-blue-100"
-                value={modalTask.contents}
-                readOnly
-              />
-              <input
-                type="text"
-                className="py-2 focus:border-1 focus:border-blue-100"
-                value={modalTask.minutes}
-                readOnly
-              />
-              <input
-                type="text"
-                className="py-2 focus:border-1 focus:border-blue-100"
-                value={modalTask.status}
-                readOnly
-              />
-            </div>
-          )}
-        </Modal>
+        {modalTask && (
+          <TaskModal
+            isOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            task={modalTask}
+          />
+        )}
       </div>
     </>
   )
 }
 
-export default Task
+export default TaskPage
