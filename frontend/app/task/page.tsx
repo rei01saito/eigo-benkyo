@@ -1,9 +1,9 @@
 'use client'
 
+import { fetchTasks } from '@/features/task/api/fetchTasks'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import Modal from 'react-modal'
-import useSWR from 'swr'
 
 type Task = {
   id: number
@@ -17,15 +17,9 @@ type TaskProps = {
   tasks: Task[]
 }
 
-const fetcher = async (url: string) => {
-  return await fetch(url).then((res) => res.json())
-}
-
 const Task: NextPage<TaskProps> = () => {
-  const { data, error, isLoading } = useSWR('/test.json', fetcher)
-  console.log(data)
-  const tasks: Task[] = data.tasks
-
+  const data = fetchTasks()
+  const [tasks, setTasks] = useState<Task[]>([])
   const [pendingTask, setPendingTask] = useState<Task[]>([])
   const [inProgressTask, setInProgressTask] = useState<Task[]>([])
   const [completedTask, setCompletedTask] = useState<Task[]>([])
@@ -38,10 +32,11 @@ const Task: NextPage<TaskProps> = () => {
   }
 
   useEffect(() => {
+    setTasks(data)
     setPendingTask(tasks.filter((task) => task.status === 1))
     setInProgressTask(tasks.filter((task) => task.status === 2))
     setCompletedTask(tasks.filter((task) => task.status === 3))
-  }, [])
+  }, [data, tasks])
 
   return (
     <>
