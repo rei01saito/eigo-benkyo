@@ -28,7 +28,6 @@ const Task: NextPage<TaskProps> = () => {
   const [modalTask, setModalTask] = useState<Task>()
   const handleOpenModal = (taskId: number) => {
     setIsModalOpen(true)
-    console.log(taskId)
     setModalTask(tasks.find((task) => task.id === taskId))
   }
 
@@ -83,21 +82,25 @@ const Task: NextPage<TaskProps> = () => {
                 type="text"
                 className="py-2 focus:border-1 focus:border-blue-100"
                 value={modalTask.title}
+                readOnly
               />
               <input
                 type="text"
                 className="py-2 focus:border-1 focus:border-blue-100"
                 value={modalTask.contents}
+                readOnly
               />
               <input
                 type="text"
                 className="py-2 focus:border-1 focus:border-blue-100"
                 value={modalTask.minutes}
+                readOnly
               />
               <input
                 type="text"
                 className="py-2 focus:border-1 focus:border-blue-100"
                 value={modalTask.status}
+                readOnly
               />
             </div>
           )}
