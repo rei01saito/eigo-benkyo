@@ -1,7 +1,7 @@
-import Clock from '@/features/home/Clock'
+import Clock from '@/features/home/components/Clock'
 import { NextPage } from 'next'
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
   const tasks = [
     {
       id: 1,
@@ -37,4 +37,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default HomePage

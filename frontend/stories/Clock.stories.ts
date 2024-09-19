@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import Clock from '../features/home/Clock'
+import Clock from '../features/home/components/Clock'
 
 const meta = {
   title: 'features/Clock',
