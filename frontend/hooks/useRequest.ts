@@ -1,7 +1,13 @@
-import Error from 'next/error'
+'use client'
+
 import useSWR from 'swr'
 
-export const useRequest = <T>(endpointUrl: string): T | undefined => {
+type Request<T> = {
+  data: T | undefined
+  isLoading: boolean
+}
+
+export const useRequest = <T>(endpointUrl: string): Request<T> => {
   const fetcher = async (url: string) => {
     return await fetch(url).then((res) => res.json())
   }
@@ -12,5 +18,8 @@ export const useRequest = <T>(endpointUrl: string): T | undefined => {
     alert(error)
   }
 
-  return data
+  return {
+    data: data,
+    isLoading: isLoading,
+  }
 }
