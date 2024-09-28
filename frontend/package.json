@@ -13,7 +13,9 @@
   "dependencies": {
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-modal": "^3.16.1",
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
@@ -28,6 +30,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-modal": "^3.16.3",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
