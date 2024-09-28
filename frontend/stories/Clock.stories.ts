@@ -1,9 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react'
-import Clock from '../features/home/Clock'
+import Clock from '../features/home/components/Clock'
 
 const meta = {
-  title: 'features/Clock',
+  title: 'features/home/Clock',
   component: Clock,
+  parameters: {
+    layout: 'fullscreen',
+  },
+  tags: ['autodocs'],
 } satisfies Meta<typeof Clock>
 export default meta
 type Story = StoryObj<typeof meta>

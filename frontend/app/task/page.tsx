@@ -1,8 +1,8 @@
 'use client'
 
-import { fetchTasks } from '@/features/task/api/fetchTasks'
 import TaskCard from '@/features/task/components/TaskCard'
 import { TaskModal } from '@/features/task/components/TaskModal'
+import { useTasks } from '@/features/task/hooks/useTasks'
 import { Task } from '@/features/task/types'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
@@ -12,7 +12,7 @@ type TaskProps = {
 }
 
 const TaskPage: NextPage<TaskProps> = () => {
-  const data = fetchTasks()
+  const data = useTasks()
   const [tasks, setTasks] = useState<Task[]>([])
   const [pendingTask, setPendingTask] = useState<Task[]>([])
   const [inProgressTask, setInProgressTask] = useState<Task[]>([])
