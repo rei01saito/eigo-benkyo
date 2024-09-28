@@ -2,7 +2,7 @@
 
 import { useClockStart } from '@/features/home/hooks/useClockStart'
 import { useClockStop } from '@/features/home/hooks/useClockStop'
-import { Task } from '@/features/home/types/types'
+import { Task } from '@/features/home/types'
 import { formatClock } from '@/features/home/utils'
 import React, { useEffect, useRef, useState } from 'react'
 
@@ -13,7 +13,7 @@ type ClockProps = {
 const Clock = ({ tasks }: ClockProps) => {
   const [isRunning, setIsRunning] = useState<boolean>(false)
   const [seconds, setSeconds] = useState<number>(0)
-  const amount = useRef(tasks[0].minutes * 60)
+  const amount = useRef(0)
   const intervalId = useRef<NodeJS.Timeout>()
   const deg = useRef<number>(360)
   const styleRotate = useRef<React.CSSProperties>({
@@ -42,8 +42,11 @@ const Clock = ({ tasks }: ClockProps) => {
   }
 
   useEffect(() => {
-    setCurrentTask(tasks[0])
-    setSeconds(tasks[0].minutes * 60)
+    if (tasks.length > 0) {
+      setCurrentTask(tasks[0])
+      setSeconds(tasks[0].minutes * 60)
+      amount.current = tasks[0].minutes * 60
+    }
   }, [])
 
   return (

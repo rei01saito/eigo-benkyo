@@ -1,4 +1,4 @@
-import { Task } from '@/features/home/types/types'
+import { Task } from '@/features/home/types'
 import React from 'react'
 
 export const useClockStart = (
