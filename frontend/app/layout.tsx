@@ -1,3 +1,4 @@
+import { Providers } from '@/app/NextUIProvider'
 import Footer from '@/components/layouts/Footer'
 import { Header } from '@/components/layouts/Header'
 import type { Metadata } from 'next'
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning={true}>
       <head>
         <meta charSet="utf-8"></meta>
         <meta
@@ -30,11 +31,11 @@ export default function RootLayout({
         ></link>
       </head>
       <body className="font-sans text-gray-900 antialiased">
-        <Header></Header>
-
-        {children}
-
-        <Footer></Footer>
+        <Providers>
+          <Header></Header>
+          {children}
+          <Footer></Footer>
+        </Providers>
       </body>
     </html>
   )
