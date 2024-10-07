@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scroller::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scroller::-webkit-scrollbar-thumb {
+    background: rgb(232, 237, 255);
+    width: 6px;
+    border-radius: 5px;
+  }
+}
