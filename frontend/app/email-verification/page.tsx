@@ -2,7 +2,7 @@
 
 import { Card } from '@nextui-org/react'
 
-const EmailConfirmation = () => {
+const EmailVerification = () => {
   return (
     <div className="mx-auto">
       <div className="w-[480px] mx-auto my-8">
@@ -14,4 +14,4 @@ const EmailConfirmation = () => {
   )
 }
 
-export default EmailConfirmation
+export default EmailVerification
