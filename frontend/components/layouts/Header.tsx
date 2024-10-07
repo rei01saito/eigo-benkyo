@@ -1,4 +1,4 @@
-import { Button } from '../Button'
+import { Button, Link } from '@nextui-org/react'
 
 type User = {
   name: string
@@ -11,15 +11,10 @@ export interface HeaderProps {
   onCreateAccount?: () => void
 }
 
-export const Header = ({
-  user,
-  onLogin,
-  onLogout,
-  onCreateAccount,
-}: HeaderProps) => (
-  <header>
+export const Header = ({ user }: HeaderProps) => (
+  <header className="mb-8">
     <div className="flex items-center justify-between py-4 px-5 border-b-2 border-slate-100">
-      <div>
+      <Link href={'/'}>
         <svg
           width="32"
           height="32"
@@ -45,25 +40,32 @@ export const Header = ({
         <h1 className="inline-block mx-2 mb-3 align-top leading-1 font-bold">
           Katask
         </h1>
-      </div>
+      </Link>
       <div>
         {user ? (
-          <>
+          <div>
             <span className="welcome">
               Welcome, <b>{user.name}</b>!
             </span>
-            <Button size="small" onClick={onLogout} label="Log out" />
-          </>
+            <Link href={'/logout'}>
+              <Button size="sm">Logout</Button>
+            </Link>
+          </div>
         ) : (
-          <>
-            <Button size="small" onClick={onLogin} label="Log in" />
+          <div className="flex items-center">
+            <Button size="sm" className="mx-1" as={Link} href="/login">
+              Login
+            </Button>
             <Button
-              primary
-              size="small"
-              onClick={onCreateAccount}
-              label="Sign up"
-            />
-          </>
+              size="sm"
+              color="primary"
+              className="mx-1"
+              as={Link}
+              href="/sign-in"
+            >
+              Sign in
+            </Button>
+          </div>
         )}
       </div>
     </div>
